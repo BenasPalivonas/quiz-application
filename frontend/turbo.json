@@ -19,7 +19,14 @@
     },
     "e2e": {
       "dependsOn": ["^build"],
+      "cache": true,
       "outputs": ["playwright-report/**", "test-results/**"]
+    },
+    "e2e:ui": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true,
+      "interactive": true
     }
   }
 }
