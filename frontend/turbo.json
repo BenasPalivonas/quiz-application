@@ -18,7 +18,8 @@
       "persistent": true
     },
     "e2e": {
-      "cache": true
+      "cache": true,
+      "outputs": ["playwright-report/**", "test-results/**"]
     },
     "e2e:ui": {
       "cache": false
