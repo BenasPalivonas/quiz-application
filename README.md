@@ -1,2 +1,62 @@
 # quiz-application
 Simple quiz application built on next.js and laravel
+
+## Prerequisites
+
+- PHP 8.2+ and Composer
+- Docker
+- Node 24+ and pnpm
+
+## Backend (Laravel)
+
+```bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+```
+
+Start the database (Postgres via Docker):
+
+```bash
+docker compose up -d
+```
+
+Run migrations (and seed sample data):
+
+```bash
+php artisan migrate --seed
+```
+
+Start the dev server:
+
+```bash
+php artisan serve
+```
+
+The API is now available at `http://127.0.0.1:8000`.
+
+## Frontend (Next.js)
+
+```bash
+cd frontend
+pnpm install
+pnpm dev
+```
+
+The web app runs at `http://localhost:3001`.
+
+## E2E tests (Playwright)
+
+Make sure the frontend dev server is running (see above), then in a separate terminal:
+
+```bash
+cd frontend
+pnpm e2e
+```
+
+Or with the interactive UI runner:
+
+```bash
+pnpm e2e:ui
+```
