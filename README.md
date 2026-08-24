@@ -1,4 +1,5 @@
 # quiz-application
+
 Simple quiz application built on next.js and laravel
 
 ## Prerequisites
@@ -44,7 +45,7 @@ pnpm install
 pnpm dev
 ```
 
-The web app runs at `http://localhost:3001`.
+The web app runs at `http://localhost:3000`.
 
 ## E2E tests (Playwright)
 
