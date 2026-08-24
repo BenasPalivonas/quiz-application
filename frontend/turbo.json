@@ -5,28 +5,23 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "!.next/dev/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^build", "^check-types"]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
     "e2e": {
-      "dependsOn": ["^build"],
-      "cache": true,
-      "outputs": ["playwright-report/**", "test-results/**"]
+      "cache": true
     },
     "e2e:ui": {
-      "dependsOn": ["^build"],
-      "cache": false,
-      "persistent": true,
-      "interactive": true
+      "cache": false
     }
   }
 }

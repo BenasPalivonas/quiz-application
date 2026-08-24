@@ -10,9 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "module",
   "devDependencies": {
     "@playwright/test": "^1.62.1",
-    "@types/node": "^22.15.3",
-    "web": "workspace:*"
+    "@types/node": "26.2.0"
   }
 }

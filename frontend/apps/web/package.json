@@ -1,10 +1,10 @@
 {
   "name": "web",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3000",
+    "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --max-warnings 0",
@@ -12,17 +12,23 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
-    "next": "16.3.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "geist": "1.7.2",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "16.3.1",
     "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.15.3",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
-    "eslint": "^9.39.1",
-    "typescript": "5.9.2"
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "eslint": "10.8.1",
+    "postcss": "8.5.26",
+    "tailwindcss": "4.3.3",
+    "typescript": "7.0.2"
   }
 }
