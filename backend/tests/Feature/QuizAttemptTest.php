@@ -90,6 +90,83 @@ class QuizAttemptTest extends TestCase
         Http::assertSent(fn ($request) => $request->url() === 'https://api.anthropic.com/v1/messages');
     }
 
+    public function test_ai_feedback_is_cached_for_identical_answers_across_attempts(): void
+    {
+        config(['services.anthropic.key' => 'test-key']);
+        Http::fake([
+            'api.anthropic.com/*' => Http::response([
+                'content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']],
+            ], 200),
+        ]);
+
+        $owner = User::factory()->create();
+        $quiz = $this->createQuiz($owner);
+        $question = $quiz->questions->first();
+        $choice = $question->choices->first();
+
+        $completeWithAnswer = function () use ($quiz, $question, $choice) {
+            $taker = User::factory()->create();
+
+            $attemptId = $this->actingAs($taker)
+                ->postJson("/api/quizzes/{$quiz->id}/attempts")
+                ->json('data.id');
+
+            $this->actingAs($taker)->postJson("/api/attempts/{$attemptId}/answers", [
+                'question_id' => $question->id,
+                'choice_id' => $choice->id,
+                'time_spent_ms' => rand(500, 5000),
+            ]);
+
+            return $this->actingAs($taker)->postJson("/api/attempts/{$attemptId}/complete");
+        };
+
+        $first = $completeWithAnswer();
+        $second = $completeWithAnswer();
+
+        $first->assertOk()->assertJsonPath('data.ai_feedback', 'You are: The Curious Fox.');
+        $second->assertOk()->assertJsonPath('data.ai_feedback', 'You are: The Curious Fox.');
+
+        // Same quiz + same choice picked twice
+        // should only hit the AI API once, the second attempt is served from cache.
+        Http::assertSentCount(1);
+    }
+
+    public function test_ai_feedback_is_not_cached_across_different_answers(): void
+    {
+        config(['services.anthropic.key' => 'test-key']);
+        Http::fakeSequence()
+            ->push(['content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']]], 200)
+            ->push(['content' => [['type' => 'text', 'text' => 'You are: The Chaotic Goblin.']]], 200);
+
+        $owner = User::factory()->create();
+        $quiz = $this->createQuiz($owner);
+        $question = $quiz->questions->first();
+
+        $completeWithChoice = function ($choice) use ($quiz, $question) {
+            $taker = User::factory()->create();
+
+            $attemptId = $this->actingAs($taker)
+                ->postJson("/api/quizzes/{$quiz->id}/attempts")
+                ->json('data.id');
+
+            $this->actingAs($taker)->postJson("/api/attempts/{$attemptId}/answers", [
+                'question_id' => $question->id,
+                'choice_id' => $choice->id,
+                'time_spent_ms' => 1000,
+            ]);
+
+            return $this->actingAs($taker)->postJson("/api/attempts/{$attemptId}/complete");
+        };
+
+        $chill = $completeWithChoice($question->choices->first());
+        $chaotic = $completeWithChoice($question->choices->last());
+
+        $chill->assertOk()->assertJsonPath('data.ai_feedback', 'You are: The Curious Fox.');
+        $chaotic->assertOk()->assertJsonPath('data.ai_feedback', 'You are: The Chaotic Goblin.');
+
+        Http::assertSentCount(2);
+    }
+
     public function test_ai_feedback_is_null_when_the_ai_call_fails(): void
     {
         config(['services.anthropic.key' => 'test-key']);
