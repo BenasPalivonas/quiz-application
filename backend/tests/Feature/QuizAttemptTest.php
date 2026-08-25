@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Quiz;
 use App\Models\User;
+use App\Services\AiFeedbackService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -54,16 +55,18 @@ class QuizAttemptTest extends TestCase
 
         $this->assertDatabaseHas('quiz_attempts', ['id' => $attemptId, 'user_id' => $taker->id]);
         $this->assertNotNull($completeResponse->json('data.completed_at'));
-        // No ANTHROPIC_API_KEY configured in tests, so the AI feedback step no-ops.
+        // No GEMINI_API_KEY configured in tests, so the AI feedback step no-ops.
         $this->assertNull($completeResponse->json('data.ai_feedback'));
     }
 
     public function test_ai_feedback_is_generated_when_the_ai_call_succeeds(): void
     {
-        config(['services.anthropic.key' => 'test-key']);
+        config(['services.gemini.key' => 'test-key']);
         Http::fake([
-            'api.anthropic.com/*' => Http::response([
-                'content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']],
+            'generativelanguage.googleapis.com/*' => Http::response([
+                'steps' => [
+                    ['type' => 'model_output', 'content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']]],
+                ],
             ], 200),
         ]);
 
@@ -87,15 +90,17 @@ class QuizAttemptTest extends TestCase
 
         $response->assertOk()->assertJsonPath('data.ai_feedback', 'You are: The Curious Fox.');
 
-        Http::assertSent(fn ($request) => $request->url() === 'https://api.anthropic.com/v1/messages');
+        Http::assertSent(fn ($request) => $request->url() === AiFeedbackService::GEMINI_API_URL);
     }
 
     public function test_ai_feedback_is_cached_for_identical_answers_across_attempts(): void
     {
-        config(['services.anthropic.key' => 'test-key']);
+        config(['services.gemini.key' => 'test-key']);
         Http::fake([
-            'api.anthropic.com/*' => Http::response([
-                'content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']],
+            'generativelanguage.googleapis.com/*' => Http::response([
+                'steps' => [
+                    ['type' => 'model_output', 'content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']]],
+                ],
             ], 200),
         ]);
 
@@ -133,10 +138,10 @@ class QuizAttemptTest extends TestCase
 
     public function test_ai_feedback_is_not_cached_across_different_answers(): void
     {
-        config(['services.anthropic.key' => 'test-key']);
+        config(['services.gemini.key' => 'test-key']);
         Http::fakeSequence()
-            ->push(['content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']]], 200)
-            ->push(['content' => [['type' => 'text', 'text' => 'You are: The Chaotic Goblin.']]], 200);
+            ->push(['steps' => [['type' => 'model_output', 'content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']]]]], 200)
+            ->push(['steps' => [['type' => 'model_output', 'content' => [['type' => 'text', 'text' => 'You are: The Chaotic Goblin.']]]]], 200);
 
         $owner = User::factory()->create();
         $quiz = $this->createQuiz($owner);
@@ -169,9 +174,11 @@ class QuizAttemptTest extends TestCase
 
     public function test_ai_feedback_is_null_when_the_ai_call_fails(): void
     {
-        config(['services.anthropic.key' => 'test-key']);
+        config(['services.gemini.key' => 'test-key']);
         Http::fake([
-            'api.anthropic.com/*' => Http::response('', 500),
+            'generativelanguage.googleapis.com/*' => Http::response([
+                'error' => ['code' => 503, 'message' => 'This model is currently experiencing high demand.', 'status' => 'UNAVAILABLE'],
+            ], 503),
         ]);
 
         $owner = User::factory()->create();

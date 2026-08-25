@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Log;
 
 class AiFeedbackService
 {
+    public const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1/interactions';
+
     private const CACHE_TTL_ONE_WEEK = 60 * 60 * 24 * 7;
 
     /**
      * Generate a personalized "quiz result" for a completed personality quiz attempt.
      *
-     * Requires ANTHROPIC_API_KEY to be set.
+     * Requires GEMINI_API_KEY to be set.
      *
      * Results are cached per quiz + choice combination for a week,
      * since the prompt is a pure function of which choices were picked,
@@ -23,8 +25,7 @@ class AiFeedbackService
      */
     public function generate(QuizAttempt $attempt): ?string
     {
-        $apiKey = config('services.anthropic.key');
-
+        $apiKey = config('services.gemini.key');
         if (! $apiKey) {
             return null;
         }
@@ -47,23 +48,29 @@ class AiFeedbackService
     private function requestAiFeedback(QuizAttempt $attempt, string $apiKey): ?string
     {
         $response = Http::withHeaders([
-            'x-api-key' => $apiKey,
-            'anthropic-version' => '2023-06-01',
-        ])->post('https://api.anthropic.com/v1/messages', [
-            'model' => config('services.anthropic.model'),
-            'max_tokens' => 400,
-            'messages' => [
-                ['role' => 'user', 'content' => $this->buildPrompt($attempt)],
-            ],
+            'x-goog-api-key' => $apiKey,
+        ])->post(self::GEMINI_API_URL, [
+            'model' => config('services.gemini.model'),
+            'input' => $this->buildPrompt($attempt),
         ]);
 
         if ($response->failed()) {
-            Log::warning('AI feedback generation failed', ['status' => $response->status()]);
+            Log::warning('AI feedback generation failed', [
+                'status' => $response->status(),
+                'message' => $response->json('error.message'),
+            ]);
 
             return null;
         }
 
-        return $response->json('content.0.text');
+        return $this->extractText($response->json('steps', []));
+    }
+
+    private function extractText(array $steps): ?string
+    {
+        $modelOutput = collect($steps)->firstWhere('type', 'model_output');
+
+        return collect($modelOutput['content'] ?? [])->firstWhere('type', 'text')['text'] ?? null;
     }
 
     /**

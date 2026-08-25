@@ -7,6 +7,7 @@ Simple quiz application built on next.js and laravel
 - PHP 8.2+ and Composer
 - Docker
 - Node 24+ and pnpm
+- Gemini API key
 
 ## Backend (Laravel)
 
