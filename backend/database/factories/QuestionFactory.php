@@ -21,7 +21,6 @@ class QuestionFactory extends Factory
         return [
             'quiz_id' => Quiz::factory(),
             'text' => fake()->sentence().'?',
-            'order' => 0,
         ];
     }
 }

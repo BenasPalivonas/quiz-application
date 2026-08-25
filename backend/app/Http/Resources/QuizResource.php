@@ -27,11 +27,9 @@ class QuizResource extends JsonResource
                 fn ($question) => [
                     'id' => $question->id,
                     'text' => $question->text,
-                    'order' => $question->order,
                     'choices' => $question->choices->map(fn ($choice) => [
                         'id' => $choice->id,
                         'text' => $choice->text,
-                        'order' => $choice->order,
                     ]),
                 ]
             )),

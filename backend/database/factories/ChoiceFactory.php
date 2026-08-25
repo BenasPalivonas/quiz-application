@@ -21,7 +21,6 @@ class ChoiceFactory extends Factory
         return [
             'question_id' => Question::factory(),
             'text' => fake()->words(3, true),
-            'order' => 0,
         ];
     }
 }

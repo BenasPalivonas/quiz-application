@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['text', 'order'])]
+#[Fillable(['text'])]
 class Question extends Model
 {
     /** @use HasFactory<QuestionFactory> */
@@ -22,6 +22,6 @@ class Question extends Model
 
     public function choices(): HasMany
     {
-        return $this->hasMany(Choice::class)->orderBy('order');
+        return $this->hasMany(Choice::class)->orderBy('id');
     }
 }

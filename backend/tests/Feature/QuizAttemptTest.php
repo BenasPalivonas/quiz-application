@@ -15,9 +15,9 @@ class QuizAttemptTest extends TestCase
     private function createQuiz(User $owner): Quiz
     {
         $quiz = $owner->quizzes()->create(['title' => 'Quiz', 'description' => null]);
-        $question = $quiz->questions()->create(['text' => 'Pick a vibe.', 'order' => 0]);
-        $question->choices()->create(['text' => 'Chill', 'order' => 0]);
-        $question->choices()->create(['text' => 'Chaotic', 'order' => 1]);
+        $question = $quiz->questions()->create(['text' => 'Pick a vibe.']);
+        $question->choices()->create(['text' => 'Chill']);
+        $question->choices()->create(['text' => 'Chaotic']);
 
         return $quiz->load('questions.choices');
     }

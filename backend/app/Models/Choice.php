@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['text', 'order'])]
+#[Fillable(['text'])]
 class Choice extends Model
 {
     /** @use HasFactory<ChoiceFactory> */

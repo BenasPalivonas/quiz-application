@@ -67,16 +67,14 @@ class QuizSeeder extends Seeder
             ],
         ];
 
-        foreach ($questions as $questionIndex => $questionData) {
+        foreach ($questions as $questionData) {
             $question = $quiz->questions()->create([
                 'text' => $questionData['text'],
-                'order' => $questionIndex,
             ]);
 
-            foreach ($questionData['choices'] as $choiceIndex => $choiceData) {
+            foreach ($questionData['choices'] as $choiceData) {
                 $question->choices()->create([
                     'text' => $choiceData['text'],
-                    'order' => $choiceIndex,
                 ]);
             }
         }
