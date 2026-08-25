@@ -32,7 +32,6 @@ class QuizController extends Controller
         $quiz = DB::transaction(function () use ($request) {
             $quiz = $request->user()->quizzes()->create([
                 'title' => $request->validated('title'),
-                'description' => $request->validated('description'),
             ]);
 
             $this->syncQuestions($quiz, $request->validated('questions'));
@@ -52,7 +51,6 @@ class QuizController extends Controller
         DB::transaction(function () use ($request, $quiz) {
             $quiz->update(array_filter([
                 'title' => $request->validated('title'),
-                'description' => $request->validated('description'),
             ], fn ($value) => $value !== null));
 
             if ($request->has('questions')) {

@@ -21,7 +21,6 @@ class QuizFactory extends Factory
         return [
             'user_id' => User::factory(),
             'title' => fake()->sentence(4),
-            'description' => fake()->paragraph(),
         ];
     }
 }

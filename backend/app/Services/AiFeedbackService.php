@@ -85,10 +85,6 @@ class AiFeedbackService
         $lines = [];
         $lines[] = "This is a personality quiz called \"{$attempt->quiz->title}\".";
 
-        if ($attempt->quiz->description) {
-            $lines[] = "Description: {$attempt->quiz->description}";
-        }
-
         $lines[] = 'A user just answered every question. Here is each question and what they picked:';
 
         foreach ($attempt->answers as $answer) {

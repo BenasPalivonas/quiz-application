@@ -19,7 +19,6 @@ class QuizResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'description' => $this->description,
             'user_id' => $this->user_id,
             'is_owner' => $isOwner,
             'questions_count' => $this->whenCounted('questions'),

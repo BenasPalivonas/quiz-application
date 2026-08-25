@@ -14,7 +14,6 @@ class QuizTest extends TestCase
     {
         return [
             'title' => 'Sample Quiz',
-            'description' => 'A quiz for testing.',
             'questions' => [
                 [
                     'text' => 'Pick a vibe.',
@@ -46,7 +45,7 @@ class QuizTest extends TestCase
     {
         $owner = User::factory()->create();
         $other = User::factory()->create();
-        $quiz = $owner->quizzes()->create(['title' => 'Original', 'description' => null]);
+        $quiz = $owner->quizzes()->create(['title' => 'Original']);
 
         $response = $this->actingAs($other)->putJson("/api/quizzes/{$quiz->id}", [
             'title' => 'Hacked',
@@ -60,7 +59,7 @@ class QuizTest extends TestCase
     {
         $owner = User::factory()->create();
         $other = User::factory()->create();
-        $quiz = $owner->quizzes()->create(['title' => 'Original', 'description' => null]);
+        $quiz = $owner->quizzes()->create(['title' => 'Original']);
 
         $this->actingAs($other)->deleteJson("/api/quizzes/{$quiz->id}")->assertForbidden();
         $this->actingAs($owner)->deleteJson("/api/quizzes/{$quiz->id}")->assertNoContent();

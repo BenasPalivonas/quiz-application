@@ -16,7 +16,6 @@ class QuizSeeder extends Seeder
 
         $quiz = $owner->quizzes()->create([
             'title' => 'What Animal Are You?',
-            'description' => 'Answer honestly and find out which animal matches your personality.',
         ]);
 
         $questions = [
