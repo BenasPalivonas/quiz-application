@@ -21,7 +21,14 @@ export default async function Page() {
         >
           <Button type="button">Create quiz</Button>
         </Link>
-        <LogoutButton />
+        <div className="flex items-center gap-3">
+          <Link href="/quizzes/mine">
+            <Button type="button" variant="secondary">
+              My quizzes
+            </Button>
+          </Link>
+          <LogoutButton />
+        </div>
       </nav>
       <div className="flex flex-1 flex-col items-center justify-center gap-4 px-4">
         <QuizPage userName={user.name} />

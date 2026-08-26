@@ -18,7 +18,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`rounded-md border-black border px-4 py-2 text-sm font-medium transition-opacity  disabled:opacity-50 ${variantClasses[variant]} ${className ?? ""}`}
+      className={`rounded-md border-black border px-4 py-2 text-sm font-medium transition-opacity hover:cursor-pointer  disabled:opacity-50 ${variantClasses[variant]} ${className ?? ""}`}
       {...props}
     />
   );

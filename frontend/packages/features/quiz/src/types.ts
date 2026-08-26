@@ -33,3 +33,15 @@ export type CreateQuizPayload = {
   title: string;
   questions: QuestionInput[];
 };
+
+export type PaginationMeta = {
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+};
+
+export type PaginatedQuizzes = {
+  data: Quiz[];
+  meta: PaginationMeta;
+};

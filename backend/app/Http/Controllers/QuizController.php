@@ -13,11 +13,13 @@ class QuizController extends Controller
 {
     public function index(Request $request)
     {
-        $quizzes = Quiz::withCount('questions')
-            ->orderByDesc('id')
-            ->paginate(15);
+        $query = Quiz::withCount('questions')->orderByDesc('id');
 
-        return QuizResource::collection($quizzes);
+        if ($request->boolean('mine')) {
+            $query->where('user_id', $request->user()->id);
+        }
+
+        return QuizResource::collection($query->paginate(15));
     }
 
     public function show(Request $request, Quiz $quiz)

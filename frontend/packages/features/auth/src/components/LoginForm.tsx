@@ -75,8 +75,8 @@ export function LoginForm() {
         {isSubmitting ? "Logging in..." : "Log in"}
       </Button>
 
-      <p className="text-center text-sm text-white/60">
-        Don&apos;t have an account?{" "}
+      <p className="text-center text-sm text-white">
+        Don't have an account?{" "}
         <Link href="/register" className="underline">
           Register
         </Link>
