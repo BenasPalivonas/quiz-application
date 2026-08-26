@@ -19,7 +19,7 @@ class QuizController extends Controller
             $query->where('user_id', $request->user()->id);
         }
 
-        return QuizResource::collection($query->paginate(15));
+        return QuizResource::collection($query->paginate(10));
     }
 
     public function show(Request $request, Quiz $quiz)

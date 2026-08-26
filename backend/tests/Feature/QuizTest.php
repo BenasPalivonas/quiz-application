@@ -66,13 +66,13 @@ class QuizTest extends TestCase
         $response = $this->actingAs($user)->getJson('/api/quizzes?mine=1');
 
         $response->assertOk()
-            ->assertJsonCount(15, 'data')
+            ->assertJsonCount(10, 'data')
             ->assertJsonPath('meta.total', 20)
             ->assertJsonPath('meta.last_page', 2);
 
         $this->actingAs($user)->getJson('/api/quizzes?mine=1&page=2')
             ->assertOk()
-            ->assertJsonCount(5, 'data');
+            ->assertJsonCount(10, 'data');
     }
 
     public function test_only_the_owner_can_update_their_quiz(): void
