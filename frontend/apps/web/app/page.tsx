@@ -1,6 +1,8 @@
 import { LogoutButton } from "@repo/auth/components/LogoutButton";
 import { getServerUser } from "@repo/auth/session";
+import { Button } from "@repo/ui/button";
 import { QuizPage } from "@repo/quiz/components/QuizPage";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
@@ -12,7 +14,13 @@ export default async function Page() {
 
   return (
     <main className="flex min-h-screen flex-col">
-      <nav className="flex w-full justify-end px-4 py-4">
+      <nav className="relative flex w-full items-center justify-end px-4 py-4">
+        <Link
+          href="/quizzes/create"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <Button type="button">Create quiz</Button>
+        </Link>
         <LogoutButton />
       </nav>
       <div className="flex flex-1 flex-col items-center justify-center gap-4 px-4">

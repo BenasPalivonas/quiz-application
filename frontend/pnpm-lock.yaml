@@ -190,6 +190,13 @@ importers:
         version: 7.0.2
 
   packages/features/quiz:
+    dependencies:
+      '@repo/auth':
+        specifier: workspace:*
+        version: link:../auth
+      '@repo/ui':
+        specifier: workspace:*
+        version: link:../../ui
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
