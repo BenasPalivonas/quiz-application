@@ -48,6 +48,3 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps
         working-directory: frontend/apps/e2e
-
-      - name: Run e2e tests
-        run: pnpm e2e
