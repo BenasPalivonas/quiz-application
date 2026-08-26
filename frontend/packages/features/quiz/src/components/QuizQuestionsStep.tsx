@@ -8,15 +8,17 @@ import {
   type FormEvent,
   type SetStateAction,
 } from "react";
-import {
-  MAX_CHOICES,
-  MAX_QUESTIONS,
-  MIN_CHOICES,
-  emptyChoice,
-  emptyQuestion,
-} from "../question-defaults";
-import type { QuestionInput } from "../types";
+import { MAX_CHOICES, MAX_QUESTIONS, MIN_CHOICES } from "../question-consts";
+import type { ChoiceInput, QuestionInput } from "../types";
 import { QuestionEditorForm } from "./QuestionEditorForm";
+
+function emptyChoice(): ChoiceInput {
+  return { text: "" };
+}
+
+function emptyQuestion(): QuestionInput {
+  return { text: "", choices: [emptyChoice(), emptyChoice()] };
+}
 
 type QuizQuestionsStepProps = {
   title: string;

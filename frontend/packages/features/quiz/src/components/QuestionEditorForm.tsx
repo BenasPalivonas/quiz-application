@@ -3,7 +3,7 @@
 import { Button } from "@repo/ui/button";
 import { ErrorText } from "@repo/ui/error-text";
 import { Input } from "@repo/ui/input";
-import { MAX_CHOICES, MIN_CHOICES } from "../question-defaults";
+import { MAX_CHOICES, MIN_CHOICES } from "../question-consts";
 import type { QuestionInput } from "../types";
 
 type QuestionEditorFormProps = {

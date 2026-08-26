@@ -5,10 +5,17 @@ import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { clientCreateQuiz } from "../client-api";
-import { emptyQuestion } from "../question-defaults";
-import type { QuestionInput } from "../types";
+import type { ChoiceInput, QuestionInput } from "../types";
 import { QuizQuestionsStep } from "./QuizQuestionsStep";
 import { QuizTitleStep } from "./QuizTitleStep";
+
+function emptyChoice(): ChoiceInput {
+  return { text: "" };
+}
+
+function emptyQuestion(): QuestionInput {
+  return { text: "", choices: [emptyChoice(), emptyChoice()] };
+}
 
 export function CreateQuizForm() {
   const router = useRouter();
