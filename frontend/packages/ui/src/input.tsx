@@ -1,5 +1,5 @@
 import type { InputHTMLAttributes } from "react";
-import { ErrorText } from "./error-text";
+import { ErrorText } from "./error-text.js";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -17,7 +17,9 @@ export function Input({ label, errors, id, className, ...props }: InputProps) {
         className={`rounded-md border bg-black text-white border-white/20 px-3 py-2 text-sm outline-none focus:border-white/40 ${className ?? ""}`}
         {...props}
       />
-      {errors?.map((msg) => <ErrorText key={msg}>{msg}</ErrorText>)}
+      {errors?.map((msg) => (
+        <ErrorText key={msg}>{msg}</ErrorText>
+      ))}
     </div>
   );
 }

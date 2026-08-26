@@ -3,9 +3,12 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:affected": "turbo run build --affected",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "lint:affected": "turbo run lint --affected",
     "test": "turbo run test",
+    "test:affected": "turbo run test --affected",
     "check-types": "turbo run check-types",
     "e2e": "turbo run e2e",
     "e2e:ui": "turbo run e2e:ui",
