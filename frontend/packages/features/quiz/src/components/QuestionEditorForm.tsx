@@ -34,7 +34,7 @@ export function QuestionEditorForm({
   onRemoveChoice,
 }: QuestionEditorFormProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-md border border-white/20 p-4">
+    <div className="flex flex-col gap-3 rounded-md border border-white p-4">
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1">
           <Input
@@ -43,7 +43,9 @@ export function QuestionEditorForm({
             placeholder="Ask a question"
             required
             value={question.text}
-            onChange={(e) => onUpdateQuestionText(questionIndex, e.target.value)}
+            onChange={(e) =>
+              onUpdateQuestionText(questionIndex, e.target.value)
+            }
             errors={fieldErrors[`questions.${questionIndex}.text`]}
           />
         </div>

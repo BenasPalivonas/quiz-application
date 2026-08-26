@@ -20,7 +20,7 @@ export function MyQuizzesList({
         {quizzes.map((quiz) => (
           <li
             key={quiz.id}
-            className="flex items-center justify-between rounded-md border border-white/20 px-4 py-3"
+            className="flex items-center justify-between rounded-md border border-white px-4 py-3"
           >
             <span className="font-medium">{quiz.title}</span>
             <span className="text-sm text-white">
