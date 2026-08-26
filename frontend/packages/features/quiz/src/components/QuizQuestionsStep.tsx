@@ -27,6 +27,7 @@ type QuizQuestionsStepProps = {
   fieldErrors: Record<string, string[]>;
   formError: string | null;
   isSubmitting: boolean;
+  submitButtonText: string;
   onEditTitle: () => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 };
@@ -38,6 +39,7 @@ export function QuizQuestionsStep({
   fieldErrors,
   formError,
   isSubmitting,
+  submitButtonText,
   onEditTitle,
   onSubmit,
 }: QuizQuestionsStepProps) {
@@ -193,7 +195,7 @@ export function QuizQuestionsStep({
       {formError && <ErrorText>{formError}</ErrorText>}
 
       <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Creating..." : "Create quiz"}
+        {submitButtonText}
       </Button>
     </form>
   );

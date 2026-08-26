@@ -72,7 +72,7 @@ export function LoginForm() {
       {formError && <ErrorText>{formError}</ErrorText>}
 
       <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Logging in..." : "Log in"}
+        Log in
       </Button>
 
       <p className="text-center text-sm text-white">

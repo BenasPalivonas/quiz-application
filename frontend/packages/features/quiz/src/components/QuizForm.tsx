@@ -4,8 +4,8 @@ import { ApiError } from "@repo/auth/http";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { clientCreateQuiz } from "../client-api";
-import type { ChoiceInput, QuestionInput } from "../types";
+import { clientCreateQuiz, clientUpdateQuiz } from "../client-api";
+import type { ChoiceInput, QuestionInput, Quiz } from "../types";
 import { QuizQuestionsStep } from "./QuizQuestionsStep";
 import { QuizTitleStep } from "./QuizTitleStep";
 
@@ -17,12 +17,25 @@ function emptyQuestion(): QuestionInput {
   return { text: "", choices: [emptyChoice(), emptyChoice()] };
 }
 
-export function CreateQuizForm() {
+function questionsFromQuiz(quiz: Quiz): QuestionInput[] {
+  if (!quiz.questions || quiz.questions.length === 0) {
+    return [emptyQuestion()];
+  }
+
+  return quiz.questions.map((question) => ({
+    text: question.text,
+    choices: question.choices.map((choice) => ({ text: choice.text })),
+  }));
+}
+
+export function QuizForm({ quiz }: { quiz?: Quiz }) {
   const router = useRouter();
 
   const [step, setStep] = useState<"title" | "questions">("title");
-  const [title, setTitle] = useState("");
-  const [questions, setQuestions] = useState<QuestionInput[]>([emptyQuestion()]);
+  const [title, setTitle] = useState(quiz?.title ?? "");
+  const [questions, setQuestions] = useState<QuestionInput[]>(
+    quiz ? questionsFromQuiz(quiz) : [emptyQuestion()],
+  );
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -37,6 +50,8 @@ export function CreateQuizForm() {
     setStep("questions");
   }
 
+  const submitButtonText = quiz ? "Save changes" : "Create quiz";
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormError(null);
@@ -45,8 +60,13 @@ export function CreateQuizForm() {
     setIsSubmitting(true);
 
     try {
-      await clientCreateQuiz({ title, questions });
-      router.push("/");
+      if (quiz) {
+        await clientUpdateQuiz(quiz.id, { title, questions });
+        router.push("/quizzes/mine");
+      } else {
+        await clientCreateQuiz({ title, questions });
+        router.push("/");
+      }
       router.refresh();
     } catch (error) {
       if (error instanceof ApiError) {
@@ -84,6 +104,7 @@ export function CreateQuizForm() {
           fieldErrors={fieldErrors}
           formError={formError}
           isSubmitting={isSubmitting}
+          submitButtonText={submitButtonText}
           onEditTitle={() => setStep("title")}
           onSubmit={handleSubmit}
         />

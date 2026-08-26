@@ -20,7 +20,9 @@ export function MyQuizzesList({
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const visibleQuizzes = quizzes.filter((quiz) => !deletedIds.includes(quiz.id));
+  const visibleQuizzes = quizzes.filter(
+    (quiz) => !deletedIds.includes(quiz.id),
+  );
 
   async function handleDelete(quiz: Quiz) {
     if (!window.confirm(`Delete "${quiz.title}"? This can't be undone.`)) {
@@ -64,10 +66,17 @@ export function MyQuizzesList({
               <Button
                 type="button"
                 variant="secondary"
+                onClick={() => router.push(`/quizzes/${quiz.id}/edit`)}
+              >
+                Edit
+              </Button>
+              <Button
+                type="button"
+                variant="secondary"
                 onClick={() => handleDelete(quiz)}
                 disabled={deletingId === quiz.id}
               >
-                {deletingId === quiz.id ? "Deleting..." : "Delete"}
+                Delete
               </Button>
             </div>
           </li>

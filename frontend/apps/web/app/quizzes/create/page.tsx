@@ -1,5 +1,5 @@
 import { getServerUser } from "@repo/auth/session";
-import { CreateQuizForm } from "@repo/quiz/components/CreateQuizForm";
+import { QuizForm } from "@repo/quiz/components/QuizForm";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -18,7 +18,7 @@ export default async function CreateQuizPage() {
             Back
           </Link>
         </div>
-        <CreateQuizForm />
+        <QuizForm />
       </div>
     </main>
   );

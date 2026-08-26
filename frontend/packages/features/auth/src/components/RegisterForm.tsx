@@ -87,7 +87,7 @@ export function RegisterForm() {
       {formError && <ErrorText>{formError}</ErrorText>}
 
       <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Creating account..." : "Create account"}
+        Create account
       </Button>
 
       <p className="text-center text-sm text-white">
