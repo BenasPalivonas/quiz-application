@@ -2,7 +2,6 @@
 
 import { Button } from "@repo/ui/button";
 import { ErrorText } from "@repo/ui/error-text";
-import { Input } from "@repo/ui/input";
 import {
   useState,
   type Dispatch,
@@ -17,6 +16,7 @@ import {
   emptyQuestion,
 } from "../question-defaults";
 import type { QuestionInput } from "../types";
+import { QuestionEditorForm } from "./QuestionEditorForm";
 
 type QuizQuestionsStepProps = {
   title: string;
@@ -159,87 +159,18 @@ export function QuizQuestionsStep({
 
         {questions.map((question, questionIndex) =>
           questionIndex === currentQuestionIndex ? (
-            <div
+            <QuestionEditorForm
               key={questionIndex}
-              className="flex flex-col gap-3 rounded-md border border-white/20 p-4"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex-1">
-                  <Input
-                    id={`question-${questionIndex}`}
-                    label={`Question ${questionIndex + 1}`}
-                    placeholder="Ask a question"
-                    required
-                    value={question.text}
-                    onChange={(e) =>
-                      updateQuestionText(questionIndex, e.target.value)
-                    }
-                    errors={fieldErrors[`questions.${questionIndex}.text`]}
-                  />
-                </div>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  className="mt-6"
-                  onClick={() => removeQuestion(questionIndex)}
-                  disabled={questions.length <= 1}
-                >
-                  Remove question
-                </Button>
-              </div>
-
-              <div className="flex flex-col gap-2 pl-4">
-                {question.choices.map((choice, choiceIndex) => (
-                  <div key={choiceIndex} className="flex items-start gap-2">
-                    <div className="flex-1">
-                      <Input
-                        id={`question-${questionIndex}-choice-${choiceIndex}`}
-                        label={`Choice ${choiceIndex + 1}`}
-                        placeholder="Choice text"
-                        required
-                        value={choice.text}
-                        onChange={(e) =>
-                          updateChoiceText(
-                            questionIndex,
-                            choiceIndex,
-                            e.target.value,
-                          )
-                        }
-                        errors={
-                          fieldErrors[
-                            `questions.${questionIndex}.choices.${choiceIndex}.text`
-                          ]
-                        }
-                      />
-                    </div>
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      className="mt-6"
-                      onClick={() => removeChoice(questionIndex, choiceIndex)}
-                      disabled={question.choices.length <= MIN_CHOICES}
-                    >
-                      Remove choice
-                    </Button>
-                  </div>
-                ))}
-
-                {fieldErrors[`questions.${questionIndex}.choices`] && (
-                  <ErrorText>
-                    {fieldErrors[`questions.${questionIndex}.choices`]?.[0]}
-                  </ErrorText>
-                )}
-
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => addChoice(questionIndex)}
-                  disabled={question.choices.length >= MAX_CHOICES}
-                >
-                  Add choice
-                </Button>
-              </div>
-            </div>
+              question={question}
+              questionIndex={questionIndex}
+              canRemoveQuestion={questions.length > 1}
+              fieldErrors={fieldErrors}
+              onUpdateQuestionText={updateQuestionText}
+              onRemoveQuestion={removeQuestion}
+              onUpdateChoiceText={updateChoiceText}
+              onAddChoice={addChoice}
+              onRemoveChoice={removeChoice}
+            />
           ) : null,
         )}
       </div>
