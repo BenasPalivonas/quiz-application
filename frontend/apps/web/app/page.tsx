@@ -11,9 +11,13 @@ export default async function Page() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 px-4">
-      <QuizPage userName={user.name} />
-      <LogoutButton />
+    <main className="flex min-h-screen flex-col">
+      <nav className="flex w-full justify-end px-4 py-4">
+        <LogoutButton />
+      </nav>
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 px-4">
+        <QuizPage userName={user.name} />
+      </div>
     </main>
   );
 }
