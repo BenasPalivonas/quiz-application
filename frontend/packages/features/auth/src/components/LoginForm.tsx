@@ -1,9 +1,10 @@
 "use client";
 
+import { Button } from "@repo/ui/button";
+import { Input } from "@repo/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { Button } from "@repo/ui/button";
 import { clientLogin } from "../client-api";
 import { ApiError } from "../http";
 
@@ -12,9 +13,7 @@ export function LoginForm() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>(
-    {},
-  );
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -43,47 +42,31 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
-      <div className="flex flex-col gap-1">
-        <label htmlFor="email" className="text-sm font-medium">
-          Email
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="rounded-md border border-white/20 px-3 py-2 text-sm outline-none focus:border-white/40"
-        />
-        {fieldErrors.email?.map((msg) => (
-          <p key={msg} className="text-sm text-red-600">
-            {msg}
-          </p>
-        ))}
-      </div>
+      <Input
+        id="email"
+        name="email"
+        label="Email"
+        type="email"
+        autoComplete="email"
+        placeholder="Please enter your email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        errors={fieldErrors.email}
+      />
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="password" className="text-sm font-medium">
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="rounded-md border border-white/20 px-3 py-2 text-sm outline-none focus:border-white/40"
-        />
-        {fieldErrors.password?.map((msg) => (
-          <p key={msg} className="text-sm text-red-600">
-            {msg}
-          </p>
-        ))}
-      </div>
+      <Input
+        id="password"
+        name="password"
+        label="Password"
+        type="password"
+        autoComplete="current-password"
+        placeholder="Please enter your password"
+        required
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        errors={fieldErrors.password}
+      />
 
       {formError && <p className="text-sm text-red-600">{formError}</p>}
 
