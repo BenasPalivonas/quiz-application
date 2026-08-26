@@ -21,6 +21,10 @@
       "cache": false,
       "persistent": true
     },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
     "e2e": {
       "cache": true,
       "outputs": ["playwright-report/**", "test-results/**"]

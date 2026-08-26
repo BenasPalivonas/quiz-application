@@ -50,9 +50,20 @@ pnpm dev
 
 The web app runs at `http://localhost:3000`.
 
+## Storybook
+
+UI components (`@repo/ui`) are documented and developed in isolation with Storybook:
+
+```bash
+cd frontend
+pnpm storybook
+```
+
+Storybook runs at `http://localhost:6006`.
+
 ## E2E tests (Playwright)
 
-Make sure the frontend dev server is running (see above), then in a separate terminal:
+Make sure the frontend and backend dev server is running (see above), then in a separate terminal:
 
 ```bash
 cd frontend

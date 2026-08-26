@@ -9,7 +9,8 @@
     "check-types": "turbo run check-types",
     "e2e": "turbo run e2e",
     "e2e:ui": "turbo run e2e:ui",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "storybook": "turbo run storybook"
   },
   "devDependencies": {
     "prettier": "3.9.6",
