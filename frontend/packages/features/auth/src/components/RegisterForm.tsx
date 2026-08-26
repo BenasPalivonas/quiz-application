@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { Button } from "@repo/ui/button";
 import { clientRegister } from "../client-api";
 import { ApiError } from "../http";
 
@@ -109,13 +110,9 @@ export function RegisterForm() {
 
       {formError && <p className="text-sm text-red-600">{formError}</p>}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50 dark:bg-white dark:text-black"
-      >
+      <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Creating account..." : "Create account"}
-      </button>
+      </Button>
 
       <p className="text-center text-sm text-black/60 dark:text-white/60">
         Already have an account?{" "}

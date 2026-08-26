@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "@repo/ui/button";
 import { clientLogout } from "../client-api";
 
 export function LogoutButton() {
@@ -13,12 +14,8 @@ export function LogoutButton() {
   }
 
   return (
-    <button
-      type="button"
-      onClick={handleLogout}
-      className="rounded-md border border-black/15 px-4 py-2 text-sm font-medium dark:border-white/20"
-    >
+    <Button type="button" variant="secondary" onClick={handleLogout}>
       Log out
-    </button>
+    </Button>
   );
 }
