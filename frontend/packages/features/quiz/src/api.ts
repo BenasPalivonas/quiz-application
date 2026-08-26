@@ -11,3 +11,7 @@ export function createQuizRequest(payload: CreateQuizPayload) {
 export function listMyQuizzesRequest(page: number) {
   return serverApiFetch<PaginatedQuizzes>(`/quizzes?mine=1&page=${page}`);
 }
+
+export function deleteQuizRequest(id: number) {
+  return serverApiFetch<void>(`/quizzes/${id}`, { method: "DELETE" });
+}

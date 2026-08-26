@@ -20,3 +20,16 @@ export async function clientCreateQuiz(payload: CreateQuizPayload) {
 
   return data as { data: Quiz };
 }
+
+export async function clientDeleteQuiz(id: number) {
+  const res = await fetch(`/api/quizzes/${id}`, { method: "DELETE" });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => null);
+    throw new ApiError(
+      res.status,
+      data?.message ?? "Something went wrong. Please try again.",
+      data?.errors,
+    );
+  }
+}
