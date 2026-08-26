@@ -1,6 +1,6 @@
+import { LoginForm } from "@repo/auth/components/LoginForm";
+import { getServerUser } from "@repo/auth/session";
 import { redirect } from "next/navigation";
-import { LoginForm } from "@/components/auth/LoginForm";
-import { getServerUser } from "@/lib/auth/session";
 
 export default async function LoginPage() {
   const user = await getServerUser();

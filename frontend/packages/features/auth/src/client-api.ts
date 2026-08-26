@@ -1,5 +1,5 @@
-import { ApiError } from "@/lib/api/client";
-import type { User } from "./types";
+import { ApiError } from "./http";
+import type { LoginPayload, RegisterPayload, User } from "./types";
 
 async function postJson<T>(path: string, body: unknown): Promise<T> {
   const res = await fetch(path, {
@@ -21,16 +21,12 @@ async function postJson<T>(path: string, body: unknown): Promise<T> {
   return data as T;
 }
 
-export function clientLogin(email: string, password: string) {
-  return postJson<{ user: User }>("/api/auth/login", { email, password });
+export function clientLogin(payload: LoginPayload) {
+  return postJson<{ user: User }>("/api/auth/login", payload);
 }
 
-export function clientRegister(name: string, email: string, password: string) {
-  return postJson<{ user: User }>("/api/auth/register", {
-    name,
-    email,
-    password,
-  });
+export function clientRegister(payload: RegisterPayload) {
+  return postJson<{ user: User }>("/api/auth/register", payload);
 }
 
 export function clientLogout() {

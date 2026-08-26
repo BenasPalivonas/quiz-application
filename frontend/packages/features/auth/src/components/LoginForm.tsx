@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { ApiError } from "@/lib/api/client";
-import { clientRegister } from "@/lib/auth/client-api";
+import { clientLogin } from "../client-api";
+import { ApiError } from "../http";
 
-export function RegisterForm() {
+export function LoginForm() {
   const router = useRouter();
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>(
@@ -25,7 +24,7 @@ export function RegisterForm() {
     setIsSubmitting(true);
 
     try {
-      await clientRegister(name, email, password);
+      await clientLogin({ email, password });
       router.push("/");
     } catch (error) {
       if (error instanceof ApiError) {
@@ -43,27 +42,6 @@ export function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
-      <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-sm font-medium">
-          Name
-        </label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          autoComplete="name"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="rounded-md border border-black/15 px-3 py-2 text-sm outline-none focus:border-black/40 dark:border-white/20 dark:focus:border-white/40"
-        />
-        {fieldErrors.name?.map((msg) => (
-          <p key={msg} className="text-sm text-red-600">
-            {msg}
-          </p>
-        ))}
-      </div>
-
       <div className="flex flex-col gap-1">
         <label htmlFor="email" className="text-sm font-medium">
           Email
@@ -93,9 +71,8 @@ export function RegisterForm() {
           id="password"
           name="password"
           type="password"
-          autoComplete="new-password"
+          autoComplete="current-password"
           required
-          minLength={8}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="rounded-md border border-black/15 px-3 py-2 text-sm outline-none focus:border-black/40 dark:border-white/20 dark:focus:border-white/40"
@@ -114,13 +91,13 @@ export function RegisterForm() {
         disabled={isSubmitting}
         className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white transition-opacity disabled:opacity-50 dark:bg-white dark:text-black"
       >
-        {isSubmitting ? "Creating account..." : "Create account"}
+        {isSubmitting ? "Logging in..." : "Log in"}
       </button>
 
       <p className="text-center text-sm text-black/60 dark:text-white/60">
-        Already have an account?{" "}
-        <Link href="/login" className="underline">
-          Log in
+        Don&apos;t have an account?{" "}
+        <Link href="/register" className="underline">
+          Register
         </Link>
       </p>
     </form>

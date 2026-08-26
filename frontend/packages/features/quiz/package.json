@@ -1,0 +1,27 @@
+{
+  "name": "@repo/quiz",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./components/*": "./src/components/*.tsx"
+  },
+  "scripts": {
+    "lint": "eslint src --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "next": "16.3.1",
+    "react": "19.2.8"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "26.2.0",
+    "@types/react": "19.2.18",
+    "eslint": "10.8.1",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "typescript": "7.0.2"
+  }
+}

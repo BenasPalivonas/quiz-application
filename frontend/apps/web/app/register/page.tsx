@@ -1,6 +1,6 @@
+import { RegisterForm } from "@repo/auth/components/RegisterForm";
+import { getServerUser } from "@repo/auth/session";
 import { redirect } from "next/navigation";
-import { RegisterForm } from "@/components/auth/RegisterForm";
-import { getServerUser } from "@/lib/auth/session";
 
 export default async function RegisterPage() {
   const user = await getServerUser();
