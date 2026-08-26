@@ -1,11 +1,10 @@
+import type { RegisterPayload } from "@repo/auth/types";
 import { expect, request, test } from "@playwright/test";
 import { randomUUID } from 'crypto';
 
 const API_URL = process.env.API_URL ?? "http://127.0.0.1:8000/api";
 
-type NewUser = { name: string; email: string; password: string };
-
-function uniqueUser(): NewUser {
+function uniqueUser(): RegisterPayload {
   return {
     name: "E2E Test User",
     email: `e2e-${randomUUID()}@example.com`,
@@ -13,7 +12,7 @@ function uniqueUser(): NewUser {
   };
 }
 
-async function registerViaApi(user: NewUser) {
+async function registerViaApi(user: RegisterPayload) {
   const api = await request.newContext();
   const res = await api.post(`${API_URL}/register`, { data: user });
   if (!res.ok()) {
