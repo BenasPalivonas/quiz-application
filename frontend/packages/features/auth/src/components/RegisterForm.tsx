@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@repo/ui/button";
+import { ErrorText } from "@repo/ui/error-text";
 import { Input } from "@repo/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -83,7 +84,7 @@ export function RegisterForm() {
         errors={fieldErrors.password}
       />
 
-      {formError && <p className="text-sm text-red-600">{formError}</p>}
+      {formError && <ErrorText>{formError}</ErrorText>}
 
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Creating account..." : "Create account"}
