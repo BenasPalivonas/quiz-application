@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "@repo/tailwind-config";
 
+@source "../../../packages/features/auth/src";
+@source "../../../packages/features/quiz/src";
+
 :root {
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
