@@ -7,8 +7,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "bg-black text-white dark:bg-white dark:text-black",
-  secondary: "border border-black/15 dark:border-white/20",
+  primary: "bg-blue-600 text-white",
+  secondary: "bg-gray-500 text-gray-100",
 };
 
 export function Button({
@@ -18,7 +18,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`rounded-md px-4 py-2 text-sm font-medium transition-opacity disabled:opacity-50 ${variantClasses[variant]} ${className ?? ""}`}
+      className={`rounded-md border-black border px-4 py-2 text-sm font-medium transition-opacity  disabled:opacity-50 ${variantClasses[variant]} ${className ?? ""}`}
       {...props}
     />
   );
