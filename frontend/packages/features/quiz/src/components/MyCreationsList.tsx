@@ -8,7 +8,7 @@ import { useState, type ReactElement } from "react";
 import { clientDeleteQuiz } from "../client-api";
 import type { PaginationMeta, Quiz } from "../types";
 
-export function MyQuizzesList({
+export function MyCreationsList({
   quizzes,
   paginationData,
 }: {

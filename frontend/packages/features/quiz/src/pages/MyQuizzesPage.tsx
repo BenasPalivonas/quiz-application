@@ -2,7 +2,7 @@ import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
 import { Suspense, type ReactElement } from "react";
 import { listMyQuizzesRequest } from "../api";
-import { MyQuizzesList } from "../components/MyQuizzesList";
+import { MyCreationsList } from "../components/MyCreationsList";
 import { QuizLayout } from "../layouts/QuizLayout";
 
 async function MyQuizzesListSection({
@@ -13,7 +13,7 @@ async function MyQuizzesListSection({
   const { data: quizzes, meta: paginationData } =
     await listMyQuizzesRequest(page);
 
-  return <MyQuizzesList quizzes={quizzes} paginationData={paginationData} />;
+  return <MyCreationsList quizzes={quizzes} paginationData={paginationData} />;
 }
 
 export function MyQuizzesPage({ page }: { page?: string }): ReactElement {
