@@ -1,7 +1,7 @@
 import { ApiError } from "@repo/auth/http";
 import { notFound } from "next/navigation";
 import { getAttemptRequest, getQuizRequest } from "../api";
-import { QuizAttemptRunner } from "../components/QuizAttemptRunner";
+import { QuizSubmit } from "../components/QuizSubmit";
 import { QuizLayout } from "../layouts/QuizLayout";
 
 export async function QuizAttemptPage({
@@ -31,7 +31,7 @@ export async function QuizAttemptPage({
     <QuizLayout>
       <div className="flex flex-1 flex-col items-center px-4 py-10">
         <div className="flex w-full max-w-2xl flex-col gap-6">
-          <QuizAttemptRunner quiz={quiz} attempt={attempt} />
+          <QuizSubmit quiz={quiz} attempt={attempt} />
         </div>
       </div>
     </QuizLayout>

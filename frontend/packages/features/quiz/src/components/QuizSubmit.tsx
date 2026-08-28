@@ -11,7 +11,7 @@ import type { Quiz, QuizAttempt } from "../types";
 
 type Phase = "taking" | "loading-result" | "result";
 
-export function QuizAttemptRunner({
+export function QuizSubmit({
   quiz,
   attempt,
 }: {
