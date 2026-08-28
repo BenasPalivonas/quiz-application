@@ -1,85 +1,33 @@
 "use client";
 
 import { Button } from "@repo/ui/button";
-import { ErrorText } from "@repo/ui/error-text";
 import { Input } from "@repo/ui/input";
-import type { Dispatch, ReactElement, SetStateAction } from "react";
+import type { ReactElement } from "react";
 import { MAX_CHOICES, MIN_CHOICES } from "../question-consts";
+import { useQuestionsStore } from "../stores/questions-store";
 import type { QuestionInput } from "../types";
 
 type QuestionEditorFormProps = {
   question: QuestionInput;
   questionIndex: number;
-  canRemoveQuestion: boolean;
   fieldErrors: Record<string, string[]>;
-  setQuestions: Dispatch<SetStateAction<QuestionInput[]>>;
-  setCurrentQuestionIndex: Dispatch<SetStateAction<number>>;
 };
 
 export function QuestionEditorForm({
   question,
   questionIndex,
-  canRemoveQuestion,
   fieldErrors,
-  setQuestions,
-  setCurrentQuestionIndex,
 }: QuestionEditorFormProps): ReactElement {
-  function updateQuestionText(text: string): void {
-    setQuestions((prev) =>
-      prev.map((question, index) =>
-        index === questionIndex ? { ...question, text } : question,
-      ),
-    );
-  }
-
-  function removeQuestion(): void {
-    setQuestions((prev) => {
-      if (prev.length <= 1) return prev;
-      const next = prev.filter((_, index) => index !== questionIndex);
-      setCurrentQuestionIndex((current) => Math.min(current, next.length - 1));
-      return next;
-    });
-  }
-
-  function updateChoiceText(choiceIndex: number, text: string): void {
-    setQuestions((prev) =>
-      prev.map((question, index) =>
-        index === questionIndex
-          ? {
-              ...question,
-              choices: question.choices.map((choice, cIndex) =>
-                cIndex === choiceIndex ? { ...choice, text } : choice,
-              ),
-            }
-          : question,
-      ),
-    );
-  }
-
-  function addChoice(): void {
-    setQuestions((prev) =>
-      prev.map((question, index) =>
-        index === questionIndex && question.choices.length < MAX_CHOICES
-          ? { ...question, choices: [...question.choices, { text: "" }] }
-          : question,
-      ),
-    );
-  }
-
-  function removeChoice(choiceIndex: number): void {
-    setQuestions((prev) =>
-      prev.map((question, index) =>
-        index === questionIndex && question.choices.length > MIN_CHOICES
-          ? {
-              ...question,
-              choices: question.choices.filter(
-                (_, cIndex) => cIndex !== choiceIndex,
-              ),
-            }
-          : question,
-      ),
-    );
-  }
+  const canRemoveQuestion = useQuestionsStore(
+    (state) => state.questions.length > 1,
+  );
+  const updateQuestionText = useQuestionsStore(
+    (state) => state.updateQuestionText,
+  );
+  const removeQuestion = useQuestionsStore((state) => state.removeQuestion);
+  const updateChoiceText = useQuestionsStore((state) => state.updateChoiceText);
+  const addChoice = useQuestionsStore((state) => state.addChoice);
+  const removeChoice = useQuestionsStore((state) => state.removeChoice);
 
   return (
     <div className="flex flex-col gap-3 rounded-md border border-white p-4">
@@ -91,7 +39,7 @@ export function QuestionEditorForm({
             placeholder="Ask a question"
             required
             value={question.text}
-            onChange={(e) => updateQuestionText(e.target.value)}
+            onChange={(e) => updateQuestionText(questionIndex, e.target.value)}
             errors={fieldErrors[`questions.${questionIndex}.text`]}
           />
         </div>
@@ -99,7 +47,7 @@ export function QuestionEditorForm({
           type="button"
           variant="secondary"
           className="mt-6"
-          onClick={removeQuestion}
+          onClick={() => removeQuestion(questionIndex)}
           disabled={!canRemoveQuestion}
         >
           Remove question
@@ -116,7 +64,9 @@ export function QuestionEditorForm({
                 placeholder="Choice text"
                 required
                 value={choice.text}
-                onChange={(e) => updateChoiceText(choiceIndex, e.target.value)}
+                onChange={(e) =>
+                  updateChoiceText(questionIndex, choiceIndex, e.target.value)
+                }
                 errors={
                   fieldErrors[
                     `questions.${questionIndex}.choices.${choiceIndex}.text`
@@ -128,7 +78,7 @@ export function QuestionEditorForm({
               type="button"
               variant="secondary"
               className="mt-6"
-              onClick={() => removeChoice(choiceIndex)}
+              onClick={() => removeChoice(questionIndex, choiceIndex)}
               disabled={question.choices.length <= MIN_CHOICES}
             >
               Remove choice
@@ -136,16 +86,10 @@ export function QuestionEditorForm({
           </div>
         ))}
 
-        {fieldErrors[`questions.${questionIndex}.choices`] && (
-          <ErrorText>
-            {fieldErrors[`questions.${questionIndex}.choices`]?.[0]}
-          </ErrorText>
-        )}
-
         <Button
           type="button"
           variant="secondary"
-          onClick={addChoice}
+          onClick={() => addChoice(questionIndex)}
           disabled={question.choices.length >= MAX_CHOICES}
         >
           Add choice

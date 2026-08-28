@@ -2,29 +2,13 @@
 
 import { Button } from "@repo/ui/button";
 import { ErrorText } from "@repo/ui/error-text";
-import {
-  useState,
-  type Dispatch,
-  type FormEvent,
-  type ReactElement,
-  type SetStateAction,
-} from "react";
+import type { FormEvent, ReactElement } from "react";
 import { MAX_QUESTIONS } from "../question-consts";
-import type { ChoiceInput, QuestionInput } from "../types";
+import { useQuestionsStore } from "../stores/questions-store";
 import { QuestionEditorForm } from "./QuestionEditorForm";
-
-function emptyChoice(): ChoiceInput {
-  return { text: "" };
-}
-
-function emptyQuestion(): QuestionInput {
-  return { text: "", choices: [emptyChoice(), emptyChoice()] };
-}
 
 type QuizQuestionsStepProps = {
   title: string;
-  questions: QuestionInput[];
-  setQuestions: Dispatch<SetStateAction<QuestionInput[]>>;
   fieldErrors: Record<string, string[]>;
   formError: string | null;
   isSubmitting: boolean;
@@ -35,8 +19,6 @@ type QuizQuestionsStepProps = {
 
 export function QuizQuestionsStep({
   title,
-  questions,
-  setQuestions,
   fieldErrors,
   formError,
   isSubmitting,
@@ -44,26 +26,15 @@ export function QuizQuestionsStep({
   onEditTitle,
   onSubmit,
 }: QuizQuestionsStepProps): ReactElement {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
-  function addQuestion(): void {
-    setQuestions((prev) => {
-      if (prev.length >= MAX_QUESTIONS) return prev;
-      const next = [...prev, emptyQuestion()];
-      setCurrentQuestionIndex(next.length - 1);
-      return next;
-    });
-  }
-
-  function goToPreviousQuestion(): void {
-    setCurrentQuestionIndex((current) => Math.max(0, current - 1));
-  }
-
-  function goToNextQuestion(): void {
-    setCurrentQuestionIndex((current) =>
-      Math.min(questions.length - 1, current + 1),
-    );
-  }
+  const questions = useQuestionsStore((state) => state.questions);
+  const currentQuestionIndex = useQuestionsStore(
+    (state) => state.currentQuestionIndex,
+  );
+  const addQuestion = useQuestionsStore((state) => state.addQuestion);
+  const goToPreviousQuestion = useQuestionsStore(
+    (state) => state.goToPreviousQuestion,
+  );
+  const goToNextQuestion = useQuestionsStore((state) => state.goToNextQuestion);
 
   return (
     <form onSubmit={onSubmit} className="flex w-full flex-col gap-6">
@@ -107,10 +78,7 @@ export function QuizQuestionsStep({
               key={questionIndex}
               question={question}
               questionIndex={questionIndex}
-              canRemoveQuestion={questions.length > 1}
               fieldErrors={fieldErrors}
-              setQuestions={setQuestions}
-              setCurrentQuestionIndex={setCurrentQuestionIndex}
             />
           ) : null,
         )}

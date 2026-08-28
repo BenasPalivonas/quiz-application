@@ -4,18 +4,16 @@ import { ApiError } from "@repo/auth/http";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent, type ReactElement } from "react";
+import { useStore } from "zustand";
 import { clientCreateQuiz, clientUpdateQuiz } from "../client-api";
-import type { ChoiceInput, QuestionInput, Quiz } from "../types";
+import {
+  QuestionsStoreContext,
+  createQuestionsStore,
+  emptyQuestion,
+} from "../stores/questions-store";
+import type { QuestionInput, Quiz } from "../types";
 import { QuizQuestionsStep } from "./QuizQuestionsStep";
 import { QuizTitleStep } from "./QuizTitleStep";
-
-function emptyChoice(): ChoiceInput {
-  return { text: "" };
-}
-
-function emptyQuestion(): QuestionInput {
-  return { text: "", choices: [emptyChoice(), emptyChoice()] };
-}
 
 function questionsFromQuiz(quiz: Quiz): QuestionInput[] {
   if (!quiz.questions || quiz.questions.length === 0) {
@@ -33,9 +31,12 @@ export function QuizForm({ quiz }: { quiz?: Quiz }): ReactElement {
 
   const [step, setStep] = useState<"title" | "questions">("title");
   const [title, setTitle] = useState(quiz?.title ?? "");
-  const [questions, setQuestions] = useState<QuestionInput[]>(
-    quiz ? questionsFromQuiz(quiz) : [emptyQuestion()],
+
+  const [questionsStore] = useState(() =>
+    createQuestionsStore(quiz ? questionsFromQuiz(quiz) : [emptyQuestion()]),
   );
+  const questions = useStore(questionsStore, (state) => state.questions);
+
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -99,17 +100,17 @@ export function QuizForm({ quiz }: { quiz?: Quiz }): ReactElement {
           onContinue={handleContinue}
         />
       ) : (
-        <QuizQuestionsStep
-          title={title}
-          questions={questions}
-          setQuestions={setQuestions}
-          fieldErrors={fieldErrors}
-          formError={formError}
-          isSubmitting={isSubmitting}
-          submitButtonText={submitButtonText}
-          onEditTitle={() => setStep("title")}
-          onSubmit={handleSubmit}
-        />
+        <QuestionsStoreContext.Provider value={questionsStore}>
+          <QuizQuestionsStep
+            title={title}
+            fieldErrors={fieldErrors}
+            formError={formError}
+            isSubmitting={isSubmitting}
+            submitButtonText={submitButtonText}
+            onEditTitle={() => setStep("title")}
+            onSubmit={handleSubmit}
+          />
+        </QuestionsStoreContext.Provider>
       )}
       {toastMessage && (
         <Toast message={toastMessage} onDismiss={() => setToastMessage(null)} />
