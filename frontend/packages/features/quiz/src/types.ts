@@ -65,7 +65,7 @@ export type AttemptAnswer = {
 export type QuizAttempt = {
   id: number;
   quiz_id: number;
-  quiz_title?: string;
+  quiz_title: string;
   quiz_questions_count?: number;
   answered_questions_count?: number;
   started_at: string;

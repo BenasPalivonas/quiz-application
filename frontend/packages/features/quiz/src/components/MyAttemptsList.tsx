@@ -13,7 +13,9 @@ export function MyAttemptsList({
 }): ReactElement {
   if (attempts.length === 0) {
     return (
-      <p className="text-sm text-white">You haven't attempted any quizzes yet.</p>
+      <p className="text-sm text-white">
+        You haven't attempted any quizzes yet.
+      </p>
     );
   }
 
@@ -31,11 +33,10 @@ export function MyAttemptsList({
               className="flex items-center justify-between rounded-md border border-white/20 px-4 py-3"
             >
               <div className="flex flex-col">
-                <span className="font-medium">
-                  {attempt.quiz_title ?? "Untitled quiz"}
-                </span>
+                <span className="font-medium">{attempt.quiz_title}</span>
                 <span className="text-sm text-white/60">
-                  {isCompleted ? "Completed" : "In progress"} &middot;{" "}
+                  {isCompleted ? "Completed" : "In progress"}
+                  {": "}
                   {answeredQuestions}/{totalQuestions} answered
                 </span>
               </div>
