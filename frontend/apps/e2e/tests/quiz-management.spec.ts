@@ -119,7 +119,7 @@ test.describe("quiz creation", () => {
       ],
     });
 
-    await page.getByRole("link", { name: "My quizzes" }).click();
+    await page.getByRole("link", { name: "My creations" }).click();
     await expect(page).toHaveURL("/quizzes/mine");
 
     const row = myQuizRow(page, title);
@@ -150,7 +150,7 @@ test.describe("quiz update", () => {
       questions: [{ text: "Original question", choices: ["Original choice 1", "Original choice 2"] }],
     });
 
-    await page.getByRole("link", { name: "My quizzes" }).click();
+    await page.getByRole("link", { name: "My creations" }).click();
     await myQuizRow(page, originalTitle).getByRole("button", { name: "Edit" }).click();
     await expect(page).toHaveURL(/\/quizzes\/\d+\/edit/);
 
@@ -210,7 +210,7 @@ test.describe("quiz deletion", () => {
       questions: [{ text: "Doomed question", choices: ["Choice 1", "Choice 2"] }],
     });
 
-    await page.getByRole("link", { name: "My quizzes" }).click();
+    await page.getByRole("link", { name: "My creations" }).click();
     await expect(myQuizRow(page, title)).toBeVisible();
 
     page.once("dialog", (dialog) => dialog.accept());
@@ -230,7 +230,7 @@ test.describe("quiz deletion", () => {
       questions: [{ text: "Safe question", choices: ["Choice 1", "Choice 2"] }],
     });
 
-    await page.getByRole("link", { name: "My quizzes" }).click();
+    await page.getByRole("link", { name: "My creations" }).click();
 
     page.once("dialog", (dialog) => dialog.dismiss());
     await myQuizRow(page, title).getByRole("button", { name: "Delete" }).click();
