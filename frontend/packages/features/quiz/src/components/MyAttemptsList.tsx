@@ -1,4 +1,5 @@
 import { Button } from "@repo/ui/button";
+import { Pagination } from "@repo/ui/pagination";
 import Link from "next/link";
 import type { ReactElement } from "react";
 import type { PaginationMeta, QuizAttempt } from "../types";
@@ -48,27 +49,7 @@ export function MyAttemptsList({
         })}
       </ul>
 
-      {paginationData.last_page > 1 && (
-        <nav className="flex items-center justify-center gap-4 text-sm">
-          {paginationData.current_page > 1 ? (
-            <Link href={`/attempts?page=${paginationData.current_page - 1}`}>
-              Previous
-            </Link>
-          ) : (
-            <span className="text-white">Previous</span>
-          )}
-          <span className="text-white">
-            Page {paginationData.current_page} of {paginationData.last_page}
-          </span>
-          {paginationData.current_page < paginationData.last_page ? (
-            <Link href={`/attempts?page=${paginationData.current_page + 1}`}>
-              Next
-            </Link>
-          ) : (
-            <span className="text-white">Next</span>
-          )}
-        </nav>
-      )}
+      <Pagination paginationData={paginationData} />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@repo/ui/button";
+import { Pagination } from "@repo/ui/pagination";
 import { Toast } from "@repo/ui/toast";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type ReactElement } from "react";
 import { clientDeleteQuiz } from "../client-api";
@@ -83,31 +83,7 @@ export function MyQuizzesList({
         ))}
       </ul>
 
-      {paginationData.last_page > 1 && (
-        <nav className="flex items-center justify-center gap-4 text-sm">
-          {paginationData.current_page > 1 ? (
-            <Link
-              href={`/quizzes/mine?page=${paginationData.current_page - 1}`}
-            >
-              Previous
-            </Link>
-          ) : (
-            <span className="text-white">Previous</span>
-          )}
-          <span className="text-white">
-            Page {paginationData.current_page} of {paginationData.last_page}
-          </span>
-          {paginationData.current_page < paginationData.last_page ? (
-            <Link
-              href={`/quizzes/mine?page=${paginationData.current_page + 1}`}
-            >
-              Next
-            </Link>
-          ) : (
-            <span className="text-white">Next</span>
-          )}
-        </nav>
-      )}
+      <Pagination paginationData={paginationData} />
 
       {errorMessage && (
         <Toast message={errorMessage} onDismiss={() => setErrorMessage(null)} />

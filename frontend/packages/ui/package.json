@@ -22,6 +22,7 @@
     "lint": "eslint src --max-warnings 0"
   },
   "peerDependencies": {
+    "next": "16.3.1",
     "react": "19.2.8"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "@tailwindcss/cli": "catalog:",
     "@types/react": "19.2.18",
     "eslint": "10.8.1",
+    "next": "16.3.1",
     "tailwindcss": "catalog:",
     "typescript": "7.0.2"
   }

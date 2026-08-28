@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Pagination } from "@repo/ui/pagination";
 import type { ReactElement } from "react";
 import type { PaginationMeta, Quiz } from "../types";
 import { StartQuizButton } from "./StartQuizButton";
@@ -37,25 +37,7 @@ export function QuizList({
           </li>
         ))}
       </ul>
-      {paginationData.last_page > 1 && (
-        <nav className="flex items-center justify-center gap-4 text-sm">
-          {paginationData.current_page > 1 ? (
-            <Link href={`/?page=${paginationData.current_page - 1}`}>
-              Previous
-            </Link>
-          ) : (
-            <span className="text-white">Previous</span>
-          )}
-          <span className="text-white">
-            Page {paginationData.current_page} of {paginationData.last_page}
-          </span>
-          {paginationData.current_page < paginationData.last_page ? (
-            <Link href={`/?page=${paginationData.current_page + 1}`}>Next</Link>
-          ) : (
-            <span className="text-white">Next</span>
-          )}
-        </nav>
-      )}
+      <Pagination paginationData={paginationData} />
     </div>
   );
 }
