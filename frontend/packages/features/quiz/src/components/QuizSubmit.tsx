@@ -5,7 +5,10 @@ import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactElement } from "react";
-import { clientCompleteQuizAttempt, clientSubmitQuizAnswer } from "../client-api";
+import {
+  clientCompleteQuizAttempt,
+  clientSubmitQuizAnswer,
+} from "../client-api";
 import { elapsedMsSince, nowMs } from "../time";
 import type { Quiz, QuizAttempt } from "../types";
 
@@ -136,11 +139,7 @@ export function QuizSubmit({
           Generating your personalized result...
         </p>
         <div className="flex flex-col gap-3">
-          <Skeleton className="h-6 w-2/3" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-5/6" />
-          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-[400px] w-full" />
         </div>
       </div>
     );
