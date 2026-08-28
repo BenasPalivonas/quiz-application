@@ -13,6 +13,17 @@ use Illuminate\Validation\ValidationException;
 
 class QuizAttemptController extends Controller
 {
+    public function index(Request $request)
+    {
+        $attempts = $request->user()->quizAttempts()
+            ->with(['quiz' => fn ($query) => $query->withCount('questions')])
+            ->withCount('answers')
+            ->orderByDesc('id')
+            ->paginate(10);
+
+        return QuizAttemptResource::collection($attempts);
+    }
+
     public function store(Request $request, Quiz $quiz)
     {
         $attempt = $quiz->attempts()->create([

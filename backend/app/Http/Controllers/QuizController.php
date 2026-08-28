@@ -13,7 +13,7 @@ class QuizController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Quiz::withCount('questions')->orderByDesc('id');
+        $query = Quiz::with('user')->withCount('questions')->orderByDesc('id');
 
         if ($request->boolean('mine')) {
             $query->where('user_id', $request->user()->id);
@@ -56,6 +56,7 @@ class QuizController extends Controller
             ], fn ($value) => $value !== null));
 
             if ($request->has('questions')) {
+                $quiz->attempts()->whereNull('completed_at')->delete();
                 $quiz->questions()->delete();
                 $this->syncQuestions($quiz, $request->validated('questions'));
             }

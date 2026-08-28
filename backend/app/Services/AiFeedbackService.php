@@ -103,8 +103,8 @@ class AiFeedbackService
         }
 
         $lines[] = <<<'PROMPT'
-            Write their personalized quiz result. Give it a fun, specific title
-            (e.g. "You are: The Curious Fox"), then 3-4 sentences describing them,
+            Write their personalized quiz result. Give it a specific title
+            (e.g. "You are: The Fox"), then 3-4 sentences describing them and why they are the personality you picked,
             grounded in the actual choices above — not generic praise. Look at what
             these specific answers suggest about their personality and commit to a
             take. Address them directly and keep the tone warm and fun, not clinical.

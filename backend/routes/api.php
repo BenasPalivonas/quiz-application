@@ -15,6 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('quizzes', QuizController::class);
 
     Route::post('/quizzes/{quiz}/attempts', [QuizAttemptController::class, 'store']);
+    Route::get('/attempts', [QuizAttemptController::class, 'index']);
     Route::get('/attempts/{attempt}', [QuizAttemptController::class, 'show']);
     Route::post('/attempts/{attempt}/answers', [QuizAttemptController::class, 'storeAnswer']);
     Route::post('/attempts/{attempt}/complete', [QuizAttemptController::class, 'complete']);

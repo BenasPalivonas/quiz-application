@@ -21,6 +21,7 @@ class QuizResource extends JsonResource
             'title' => $this->title,
             'user_id' => $this->user_id,
             'is_owner' => $isOwner,
+            'user_name' => $this->whenLoaded('user', fn () => $this->user->name),
             'questions_count' => $this->whenCounted('questions'),
             'questions' => $this->whenLoaded('questions', fn () => $this->questions->map(
                 fn ($question) => [

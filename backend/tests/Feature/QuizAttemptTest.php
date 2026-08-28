@@ -222,6 +222,37 @@ class QuizAttemptTest extends TestCase
         ])->assertForbidden();
     }
 
+    public function test_a_user_can_list_only_their_own_attempts(): void
+    {
+        $owner = User::factory()->create();
+        $taker = User::factory()->create();
+        $otherTaker = User::factory()->create();
+        $quiz = $this->createQuiz($owner);
+        $question = $quiz->questions->first();
+        $choice = $question->choices->first();
+
+        $attemptId = $this->actingAs($taker)
+            ->postJson("/api/quizzes/{$quiz->id}/attempts")
+            ->json('data.id');
+
+        $this->actingAs($taker)->postJson("/api/attempts/{$attemptId}/answers", [
+            'question_id' => $question->id,
+            'choice_id' => $choice->id,
+            'time_spent_ms' => 1000,
+        ]);
+
+        $this->actingAs($otherTaker)->postJson("/api/quizzes/{$quiz->id}/attempts");
+
+        $response = $this->actingAs($taker)->getJson('/api/attempts');
+
+        $response->assertOk();
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.id', $attemptId);
+        $response->assertJsonPath('data.0.quiz_title', 'Quiz');
+        $response->assertJsonPath('data.0.quiz_questions_count', 1);
+        $response->assertJsonPath('data.0.answered_questions_count', 1);
+    }
+
     public function test_a_choice_must_belong_to_the_given_question(): void
     {
         $owner = User::factory()->create();

@@ -100,4 +100,29 @@ class QuizTest extends TestCase
 
         $this->assertDatabaseMissing('quizzes', ['id' => $quiz->id]);
     }
+
+    public function test_replacing_questions_on_update_deletes_pending_attempts_but_keeps_completed_ones(): void
+    {
+        $owner = User::factory()->create();
+        $quiz = $owner->quizzes()->create(['title' => 'Original']);
+        $quiz->questions()->create(['text' => 'Pick a vibe.']);
+
+        $pendingAttempt = $quiz->attempts()->create([
+            'user_id' => User::factory()->create()->id,
+            'started_at' => now(),
+        ]);
+
+        $completedAttempt = $quiz->attempts()->create([
+            'user_id' => User::factory()->create()->id,
+            'started_at' => now(),
+            'completed_at' => now(),
+            'ai_feedback' => 'You are: The Curious Fox.',
+        ]);
+
+        $response = $this->actingAs($owner)->putJson("/api/quizzes/{$quiz->id}", $this->samplePayload());
+
+        $response->assertOk();
+        $this->assertDatabaseMissing('quiz_attempts', ['id' => $pendingAttempt->id]);
+        $this->assertDatabaseHas('quiz_attempts', ['id' => $completedAttempt->id]);
+    }
 }

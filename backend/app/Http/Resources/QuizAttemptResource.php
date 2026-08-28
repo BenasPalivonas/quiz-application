@@ -18,6 +18,8 @@ class QuizAttemptResource extends JsonResource
             'id' => $this->id,
             'quiz_id' => $this->quiz_id,
             'quiz_title' => $this->whenLoaded('quiz', fn () => $this->quiz->title),
+            'quiz_questions_count' => $this->whenLoaded('quiz', fn () => $this->quiz->questions_count),
+            'answered_questions_count' => $this->whenCounted('answers'),
             'started_at' => $this->started_at,
             'completed_at' => $this->completed_at,
             'ai_feedback' => $this->ai_feedback,
