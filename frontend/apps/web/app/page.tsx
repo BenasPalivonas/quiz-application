@@ -1,6 +1,5 @@
 import { getServerUser } from "@repo/auth/session";
-import { QuizPage } from "@repo/quiz/components/QuizPage";
-import { Navbar } from "@/components/Navbar";
+import { QuizHomePage } from "@repo/quiz/pages/QuizHomePage";
 import { redirect } from "next/navigation";
 
 export default async function Page({
@@ -9,7 +8,6 @@ export default async function Page({
   searchParams: Promise<{ page?: string }>;
 }) {
   const user = await getServerUser();
-
   if (!user) {
     redirect("/login");
   }
@@ -17,9 +15,8 @@ export default async function Page({
   const { page } = await searchParams;
 
   return (
-    <main className="flex min-h-screen flex-col">
-      <Navbar />
-      <QuizPage userName={user.name} page={page} />
+    <main>
+      <QuizHomePage userName={user.name} page={page} />
     </main>
   );
 }

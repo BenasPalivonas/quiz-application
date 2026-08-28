@@ -11,7 +11,8 @@
     "./api": "./src/api.ts",
     "./client-api": "./src/client-api.ts",
     "./routes": "./src/routes.ts",
-    "./components/*": "./src/components/*.tsx"
+    "./components/*": "./src/components/*.tsx",
+    "./pages/*": "./src/pages/*.tsx"
   },
   "scripts": {
     "lint": "eslint src --max-warnings 0",

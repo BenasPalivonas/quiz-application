@@ -2,7 +2,7 @@ import { LogoutButton } from "@repo/auth/components/LogoutButton";
 import { Button } from "@repo/ui/button";
 import Link from "next/link";
 
-export function Navbar() {
+export function QuizNavbar() {
   return (
     <nav className="relative flex w-full items-center justify-end px-4 py-4">
       <div className="flex items-center gap-3">
