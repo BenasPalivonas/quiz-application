@@ -29,6 +29,6 @@ To fix it, download a CA bundle and point PHP at it:
     curl.cainfo = "C:\php\cacert.pem"
     openssl.cafile = "C:\php\cacert.pem"
     ```
-3. Restart `composer run dev` so it picks up the change.
+3. Restart `php artisan dev` so it picks up the change.
 
 This is a local Windows dev-environment fix only — it doesn't need to be replicated in deployment. Linux hosts (including Laravel Cloud) already have a system CA store wired into OpenSSL/cURL by default.
