@@ -5,7 +5,7 @@ import { ErrorText } from "@repo/ui/error-text";
 import { Input } from "@repo/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent, type ReactElement } from "react";
+import { useState, type SubmitEvent, type ReactElement } from "react";
 import { clientRegister } from "../client-api";
 import { ApiError } from "../http";
 
@@ -20,7 +20,7 @@ export function RegisterForm(): ReactElement {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(
-    event: FormEvent<HTMLFormElement>,
+    event: SubmitEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
     setFormError(null);

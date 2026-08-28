@@ -4,7 +4,7 @@ import { ApiError } from "@repo/auth/http";
 import { Button } from "@repo/ui/button";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
-import { type FormEvent, type ReactElement, useRef, useState } from "react";
+import { type ReactElement, type SubmitEvent, useRef, useState } from "react";
 import { clientCreateQuiz, clientUpdateQuiz } from "../client-api";
 import { MAX_QUESTIONS } from "../question-consts";
 import { useQuizStore, useQuizStoreApi } from "../stores/quiz-store";
@@ -42,7 +42,7 @@ export function QuizQuestionsStep({
   const submitButtonText = quiz ? "Save changes" : "Create quiz";
 
   async function handleSubmit(
-    event: FormEvent<HTMLFormElement>,
+    event: SubmitEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
     if (isSubmittingRef.current) {
