@@ -1,16 +1,17 @@
 "use client";
 
 import { Button } from "@repo/ui/button";
-import { ErrorText } from "@repo/ui/error-text";
-import type { FormEvent, ReactElement } from "react";
+import { type FormEvent, type ReactElement, useState } from "react";
 import { MAX_QUESTIONS } from "../question-consts";
-import { useQuestionsStore } from "../stores/questions-store";
+import {
+  useQuestionsStore,
+  useQuestionsStoreApi,
+} from "../stores/questions-store";
 import { QuestionEditorForm } from "./QuestionEditorForm";
 
 type QuizQuestionsStepProps = {
   title: string;
   fieldErrors: Record<string, string[]>;
-  formError: string | null;
   isSubmitting: boolean;
   submitButtonText: string;
   onEditTitle: () => void;
@@ -20,21 +21,25 @@ type QuizQuestionsStepProps = {
 export function QuizQuestionsStep({
   title,
   fieldErrors,
-  formError,
   isSubmitting,
   submitButtonText,
   onEditTitle,
   onSubmit,
 }: QuizQuestionsStepProps): ReactElement {
+  const questionsStoreApi = useQuestionsStoreApi();
   const questions = useQuestionsStore((state) => state.questions);
-  const currentQuestionIndex = useQuestionsStore(
-    (state) => state.currentQuestionIndex,
-  );
   const addQuestion = useQuestionsStore((state) => state.addQuestion);
-  const goToPreviousQuestion = useQuestionsStore(
-    (state) => state.goToPreviousQuestion,
-  );
-  const goToNextQuestion = useQuestionsStore((state) => state.goToNextQuestion);
+
+  const [questionIndex, _setQuestionIndex] = useState(0);
+  const setQuestionIndex = (index: number): void => {
+    const lastIndex = questionsStoreApi.getState().questions.length - 1;
+    _setQuestionIndex(Math.max(0, Math.min(index, lastIndex)));
+  };
+  const currentQuestion = questions[questionIndex];
+
+  if (!currentQuestion) {
+    return <></>;
+  }
 
   return (
     <form onSubmit={onSubmit} className="flex w-full flex-col gap-6">
@@ -50,54 +55,46 @@ export function QuizQuestionsStep({
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-2">
           <span className="text-sm">
-            Question {currentQuestionIndex + 1}/{questions.length}
+            Question {questionIndex + 1}/{questions.length}
           </span>
           <div className="flex gap-2">
             <Button
               type="button"
               variant="secondary"
-              onClick={goToPreviousQuestion}
-              disabled={currentQuestionIndex <= 0}
+              onClick={() => setQuestionIndex(questionIndex - 1)}
+              disabled={questionIndex <= 0}
             >
               Previous
             </Button>
             <Button
               type="button"
               variant="secondary"
-              onClick={goToNextQuestion}
-              disabled={currentQuestionIndex >= questions.length - 1}
+              onClick={() => setQuestionIndex(questionIndex + 1)}
+              disabled={questionIndex >= questions.length - 1}
             >
               Next
             </Button>
           </div>
         </div>
 
-        {questions.map((question, questionIndex) =>
-          questionIndex === currentQuestionIndex ? (
-            <QuestionEditorForm
-              key={questionIndex}
-              question={question}
-              questionIndex={questionIndex}
-              fieldErrors={fieldErrors}
-            />
-          ) : null,
-        )}
+        <QuestionEditorForm
+          question={currentQuestion}
+          questionIndex={questionIndex}
+          fieldErrors={fieldErrors}
+        />
       </div>
-
-      {fieldErrors.questions && (
-        <ErrorText>{fieldErrors.questions[0]}</ErrorText>
-      )}
 
       <Button
         type="button"
         variant="secondary"
-        onClick={addQuestion}
+        onClick={() => {
+          addQuestion();
+          setQuestionIndex(questions.length);
+        }}
         disabled={questions.length >= MAX_QUESTIONS}
       >
         Add question
       </Button>
-
-      {formError && <ErrorText>{formError}</ErrorText>}
 
       <Button type="submit" disabled={isSubmitting}>
         {submitButtonText}

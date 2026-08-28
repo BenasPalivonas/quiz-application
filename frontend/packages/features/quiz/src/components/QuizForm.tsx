@@ -38,7 +38,6 @@ export function QuizForm({ quiz }: { quiz?: Quiz }): ReactElement {
   const questions = useStore(questionsStore, (state) => state.questions);
 
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
-  const [formError, setFormError] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -57,7 +56,6 @@ export function QuizForm({ quiz }: { quiz?: Quiz }): ReactElement {
     event: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
-    setFormError(null);
     setFieldErrors({});
     setToastMessage(null);
     setIsSubmitting(true);
@@ -80,10 +78,10 @@ export function QuizForm({ quiz }: { quiz?: Quiz }): ReactElement {
             "Some questions or choices are missing information. Please review every question before creating the quiz.",
           );
         } else if (!error.errors) {
-          setFormError(error.message);
+          setToastMessage(error.message);
         }
       } else {
-        setFormError("Something went wrong. Please try again.");
+        setToastMessage("Something went wrong. Please try again.");
       }
     } finally {
       setIsSubmitting(false);
@@ -104,7 +102,6 @@ export function QuizForm({ quiz }: { quiz?: Quiz }): ReactElement {
           <QuizQuestionsStep
             title={title}
             fieldErrors={fieldErrors}
-            formError={formError}
             isSubmitting={isSubmitting}
             submitButtonText={submitButtonText}
             onEditTitle={() => setStep("title")}
