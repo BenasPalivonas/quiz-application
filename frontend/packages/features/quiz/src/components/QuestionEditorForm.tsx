@@ -4,7 +4,7 @@ import { Button } from "@repo/ui/button";
 import { Input } from "@repo/ui/input";
 import type { ReactElement } from "react";
 import { MAX_CHOICES, MIN_CHOICES } from "../question-consts";
-import { useQuestionsStore } from "../stores/questions-store";
+import { useQuizStore } from "../stores/quiz-store";
 import type { QuestionInput } from "../types";
 
 type QuestionEditorFormProps = {
@@ -18,16 +18,14 @@ export function QuestionEditorForm({
   questionIndex,
   fieldErrors,
 }: QuestionEditorFormProps): ReactElement {
-  const canRemoveQuestion = useQuestionsStore(
+  const canRemoveQuestion = useQuizStore(
     (state) => state.questions.length > 1,
   );
-  const updateQuestionText = useQuestionsStore(
-    (state) => state.updateQuestionText,
-  );
-  const removeQuestion = useQuestionsStore((state) => state.removeQuestion);
-  const updateChoiceText = useQuestionsStore((state) => state.updateChoiceText);
-  const addChoice = useQuestionsStore((state) => state.addChoice);
-  const removeChoice = useQuestionsStore((state) => state.removeChoice);
+  const updateQuestionText = useQuizStore((state) => state.updateQuestionText);
+  const removeQuestion = useQuizStore((state) => state.removeQuestion);
+  const updateChoiceText = useQuizStore((state) => state.updateChoiceText);
+  const addChoice = useQuizStore((state) => state.addChoice);
+  const removeChoice = useQuizStore((state) => state.removeChoice);
 
   return (
     <div className="flex flex-col gap-3 rounded-md border border-white p-4">

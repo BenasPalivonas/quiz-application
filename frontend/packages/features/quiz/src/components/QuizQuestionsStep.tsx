@@ -7,33 +7,29 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, type ReactElement, useState } from "react";
 import { clientCreateQuiz, clientUpdateQuiz } from "../client-api";
 import { MAX_QUESTIONS } from "../question-consts";
-import {
-  useQuestionsStore,
-  useQuestionsStoreApi,
-} from "../stores/questions-store";
+import { useQuizStore, useQuizStoreApi } from "../stores/quiz-store";
 import type { Quiz } from "../types";
 import { QuestionEditorForm } from "./QuestionEditorForm";
 
 type QuizQuestionsStepProps = {
   quiz?: Quiz;
-  title: string;
-  onEditTitle: () => void;
+  setEditTitleStep: () => void;
 };
 
 export function QuizQuestionsStep({
   quiz,
-  title,
-  onEditTitle,
+  setEditTitleStep,
 }: QuizQuestionsStepProps): ReactElement {
   const router = useRouter();
 
-  const questionsStoreApi = useQuestionsStoreApi();
-  const questions = useQuestionsStore((state) => state.questions);
-  const addQuestion = useQuestionsStore((state) => state.addQuestion);
+  const quizStoreApi = useQuizStoreApi();
+  const title = useQuizStore((state) => state.title);
+  const questions = useQuizStore((state) => state.questions);
+  const addQuestion = useQuizStore((state) => state.addQuestion);
 
   const [questionIndex, _setQuestionIndex] = useState(0);
   const setQuestionIndex = (index: number): void => {
-    const lastIndex = questionsStoreApi.getState().questions.length - 1;
+    const lastIndex = quizStoreApi.getState().questions.length - 1;
     _setQuestionIndex(Math.max(0, Math.min(index, lastIndex)));
   };
   const currentQuestion = questions[questionIndex];
@@ -92,7 +88,7 @@ export function QuizQuestionsStep({
             <span className="text-xl flex font-medium">
               Quiz title: {title}
             </span>
-            <Button type="button" variant="secondary" onClick={onEditTitle}>
+            <Button type="button" variant="secondary" onClick={setEditTitleStep}>
               Edit title
             </Button>
           </div>

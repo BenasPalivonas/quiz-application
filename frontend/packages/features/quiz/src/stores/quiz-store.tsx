@@ -13,11 +13,13 @@ export function emptyQuestion(): QuestionInput {
   return { text: "", choices: [emptyChoice(), emptyChoice()] };
 }
 
-type QuestionsState = {
+type QuizState = {
+  title: string;
   questions: QuestionInput[];
 };
 
-type QuestionsActions = {
+type QuizActions = {
+  setTitle: (title: string) => void;
   addQuestion: () => void;
   removeQuestion: (questionIndex: number) => void;
   updateQuestionText: (questionIndex: number, text: string) => void;
@@ -30,13 +32,17 @@ type QuestionsActions = {
   removeChoice: (questionIndex: number, choiceIndex: number) => void;
 };
 
-type QuestionsStore = QuestionsState & QuestionsActions;
+type QuizStore = QuizState & QuizActions;
 
-export function createQuestionsStore(
+export function createQuizStore(
+  initialTitle: string,
   initialQuestions: QuestionInput[],
-): StoreApi<QuestionsStore> {
-  return createStore<QuestionsStore>()((set) => ({
+): StoreApi<QuizStore> {
+  return createStore<QuizStore>()((set) => ({
+    title: initialTitle,
     questions: initialQuestions,
+
+    setTitle: (title): void => set({ title }),
 
     addQuestion: (): void =>
       set((state) => {
@@ -101,24 +107,18 @@ export function createQuestionsStore(
   }));
 }
 
-export type QuestionsStoreApi = ReturnType<typeof createQuestionsStore>;
+export type QuizStoreApi = ReturnType<typeof createQuizStore>;
 
-export const QuestionsStoreContext = createContext<QuestionsStoreApi | null>(
-  null,
-);
+export const QuizStoreContext = createContext<QuizStoreApi | null>(null);
 
-export function useQuestionsStoreApi(): QuestionsStoreApi {
-  const store = useContext(QuestionsStoreContext);
+export function useQuizStoreApi(): QuizStoreApi {
+  const store = useContext(QuizStoreContext);
   if (!store) {
-    throw new Error(
-      "useQuestionsStore must be used within a QuestionsStoreProvider",
-    );
+    throw new Error("useQuizStore must be used within a QuizStoreProvider");
   }
   return store;
 }
 
-export function useQuestionsStore<T>(
-  selector: (state: QuestionsStore) => T,
-): T {
-  return useStore(useQuestionsStoreApi(), selector);
+export function useQuizStore<T>(selector: (state: QuizStore) => T): T {
+  return useStore(useQuizStoreApi(), selector);
 }

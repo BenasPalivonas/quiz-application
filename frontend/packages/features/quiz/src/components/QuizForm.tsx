@@ -2,10 +2,10 @@
 
 import { useState, type ReactElement } from "react";
 import {
-  QuestionsStoreContext,
-  createQuestionsStore,
+  QuizStoreContext,
+  createQuizStore,
   emptyQuestion,
-} from "../stores/questions-store";
+} from "../stores/quiz-store";
 import type { QuestionInput, Quiz } from "../types";
 import { QuizQuestionsStep } from "./QuizQuestionsStep";
 import { QuizTitleStep } from "./QuizTitleStep";
@@ -23,25 +23,24 @@ function questionsFromQuiz(quiz: Quiz): QuestionInput[] {
 
 export function QuizForm({ quiz }: { quiz?: Quiz }): ReactElement {
   const [step, setStep] = useState<"title" | "questions">("title");
-  const [title, setTitle] = useState(quiz?.title ?? "");
 
-  const [questionsStore] = useState(() =>
-    createQuestionsStore(quiz ? questionsFromQuiz(quiz) : [emptyQuestion()]),
+  const [quizStore] = useState(() =>
+    createQuizStore(
+      quiz?.title ?? "",
+      quiz ? questionsFromQuiz(quiz) : [emptyQuestion()],
+    ),
   );
 
-  return step === "title" ? (
-    <QuizTitleStep
-      title={title}
-      onTitleChange={setTitle}
-      onContinue={() => setStep("questions")}
-    />
-  ) : (
-    <QuestionsStoreContext.Provider value={questionsStore}>
-      <QuizQuestionsStep
-        quiz={quiz}
-        title={title}
-        onEditTitle={() => setStep("title")}
-      />
-    </QuestionsStoreContext.Provider>
+  return (
+    <QuizStoreContext.Provider value={quizStore}>
+      {step === "title" ? (
+        <QuizTitleStep setEditQuestionsStep={() => setStep("questions")} />
+      ) : (
+        <QuizQuestionsStep
+          quiz={quiz}
+          setEditTitleStep={() => setStep("title")}
+        />
+      )}
+    </QuizStoreContext.Provider>
   );
 }

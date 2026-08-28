@@ -3,18 +3,17 @@
 import { Button } from "@repo/ui/button";
 import { Input } from "@repo/ui/input";
 import { useState, type ReactElement } from "react";
+import { useQuizStore } from "../stores/quiz-store";
 
 type QuizTitleStepProps = {
-  title: string;
-  onTitleChange: (title: string) => void;
-  onContinue: () => void;
+  setEditQuestionsStep: () => void;
 };
 
 export function QuizTitleStep({
-  title,
-  onTitleChange,
-  onContinue,
+  setEditQuestionsStep,
 }: QuizTitleStepProps): ReactElement {
+  const title = useQuizStore((state) => state.title);
+  const setTitle = useQuizStore((state) => state.setTitle);
   const [errors, setErrors] = useState<string[] | undefined>();
 
   function handleContinue(): void {
@@ -23,7 +22,7 @@ export function QuizTitleStep({
       return;
     }
     setErrors(undefined);
-    onContinue();
+    setEditQuestionsStep();
   }
 
   return (
@@ -35,7 +34,7 @@ export function QuizTitleStep({
         placeholder="What Animal Are You?"
         required
         value={title}
-        onChange={(e) => onTitleChange(e.target.value)}
+        onChange={(e) => setTitle(e.target.value)}
         errors={errors}
       />
 
