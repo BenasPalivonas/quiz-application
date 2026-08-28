@@ -9,7 +9,7 @@ import {
   type ReactElement,
   type SetStateAction,
 } from "react";
-import { MAX_CHOICES, MAX_QUESTIONS, MIN_CHOICES } from "../question-consts";
+import { MAX_QUESTIONS } from "../question-consts";
 import type { ChoiceInput, QuestionInput } from "../types";
 import { QuestionEditorForm } from "./QuestionEditorForm";
 
@@ -46,28 +46,11 @@ export function QuizQuestionsStep({
 }: QuizQuestionsStepProps): ReactElement {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
-  function updateQuestionText(questionIndex: number, text: string): void {
-    setQuestions((prev) =>
-      prev.map((question, index) =>
-        index === questionIndex ? { ...question, text } : question,
-      ),
-    );
-  }
-
   function addQuestion(): void {
     setQuestions((prev) => {
       if (prev.length >= MAX_QUESTIONS) return prev;
       const next = [...prev, emptyQuestion()];
       setCurrentQuestionIndex(next.length - 1);
-      return next;
-    });
-  }
-
-  function removeQuestion(questionIndex: number): void {
-    setQuestions((prev) => {
-      if (prev.length <= 1) return prev;
-      const next = prev.filter((_, index) => index !== questionIndex);
-      setCurrentQuestionIndex((current) => Math.min(current, next.length - 1));
       return next;
     });
   }
@@ -79,50 +62,6 @@ export function QuizQuestionsStep({
   function goToNextQuestion(): void {
     setCurrentQuestionIndex((current) =>
       Math.min(questions.length - 1, current + 1),
-    );
-  }
-
-  function updateChoiceText(
-    questionIndex: number,
-    choiceIndex: number,
-    text: string,
-  ): void {
-    setQuestions((prev) =>
-      prev.map((question, index) =>
-        index === questionIndex
-          ? {
-              ...question,
-              choices: question.choices.map((choice, cIndex) =>
-                cIndex === choiceIndex ? { ...choice, text } : choice,
-              ),
-            }
-          : question,
-      ),
-    );
-  }
-
-  function addChoice(questionIndex: number): void {
-    setQuestions((prev) =>
-      prev.map((question, index) =>
-        index === questionIndex && question.choices.length < MAX_CHOICES
-          ? { ...question, choices: [...question.choices, emptyChoice()] }
-          : question,
-      ),
-    );
-  }
-
-  function removeChoice(questionIndex: number, choiceIndex: number): void {
-    setQuestions((prev) =>
-      prev.map((question, index) =>
-        index === questionIndex && question.choices.length > MIN_CHOICES
-          ? {
-              ...question,
-              choices: question.choices.filter(
-                (_, cIndex) => cIndex !== choiceIndex,
-              ),
-            }
-          : question,
-      ),
     );
   }
 
@@ -170,11 +109,8 @@ export function QuizQuestionsStep({
               questionIndex={questionIndex}
               canRemoveQuestion={questions.length > 1}
               fieldErrors={fieldErrors}
-              onUpdateQuestionText={updateQuestionText}
-              onRemoveQuestion={removeQuestion}
-              onUpdateChoiceText={updateChoiceText}
-              onAddChoice={addChoice}
-              onRemoveChoice={removeChoice}
+              setQuestions={setQuestions}
+              setCurrentQuestionIndex={setCurrentQuestionIndex}
             />
           ) : null,
         )}
