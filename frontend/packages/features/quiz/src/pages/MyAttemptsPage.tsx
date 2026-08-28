@@ -1,18 +1,23 @@
+import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
-import type { ReactElement } from "react";
+import { Suspense, type ReactElement } from "react";
 import { listMyAttemptsRequest } from "../api";
 import { MyAttemptsList } from "../components/MyAttemptsList";
 import { QuizLayout } from "../layouts/QuizLayout";
 
-export async function MyAttemptsPage({
+async function MyAttemptsListSection({
   page,
 }: {
-  page?: string;
+  page: number;
 }): Promise<ReactElement> {
-  const pageNumber = Math.max(1, Number(page) || 1);
-
   const { data: attempts, meta: paginationData } =
-    await listMyAttemptsRequest(pageNumber);
+    await listMyAttemptsRequest(page);
+
+  return <MyAttemptsList attempts={attempts} paginationData={paginationData} />;
+}
+
+export function MyAttemptsPage({ page }: { page?: string }): ReactElement {
+  const pageNumber = Math.max(1, Number(page) || 1);
 
   return (
     <QuizLayout>
@@ -24,10 +29,12 @@ export async function MyAttemptsPage({
               Back
             </Link>
           </div>
-          <MyAttemptsList
-            attempts={attempts}
-            paginationData={paginationData}
-          />
+          <Suspense
+            key={pageNumber}
+            fallback={<Skeleton className="block h-[852px] w-full" />}
+          >
+            <MyAttemptsListSection page={pageNumber} />
+          </Suspense>
         </div>
       </div>
     </QuizLayout>
