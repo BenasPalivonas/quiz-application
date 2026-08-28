@@ -1,8 +1,9 @@
 import Link from "next/link";
+import type { ReactElement } from "react";
 import { QuizForm } from "../components/QuizForm";
 import { QuizLayout } from "../layouts/QuizLayout";
 
-export function CreateQuizPage() {
+export function CreateQuizPage(): ReactElement {
   return (
     <QuizLayout>
       <div className="flex flex-1 flex-col items-center px-4 py-10">

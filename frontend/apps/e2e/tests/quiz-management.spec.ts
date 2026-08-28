@@ -1,5 +1,11 @@
 import type { RegisterPayload } from "@repo/auth/types";
-import { expect, request, test, type Page } from "@playwright/test";
+import {
+  expect,
+  request,
+  test,
+  type Locator,
+  type Page,
+} from "@playwright/test";
 import { randomUUID } from "crypto";
 
 const API_URL = process.env.API_URL ?? "http://127.0.0.1:8000/api";
@@ -19,7 +25,7 @@ function uniqueTitle(label: string): string {
   return `${label} ${randomUUID()}`;
 }
 
-async function registerViaApi(user: RegisterPayload) {
+async function registerViaApi(user: RegisterPayload): Promise<void> {
   const api = await request.newContext();
   const res = await api.post(`${API_URL}/register`, { data: user });
   if (!res.ok()) {
@@ -28,7 +34,7 @@ async function registerViaApi(user: RegisterPayload) {
   await api.dispose();
 }
 
-async function loginViaUi(page: Page, user: RegisterPayload) {
+async function loginViaUi(page: Page, user: RegisterPayload): Promise<void> {
   await page.goto("/login");
   await page.getByLabel("Email").fill(user.email);
   await page.getByLabel("Password").fill(user.password);
@@ -36,17 +42,24 @@ async function loginViaUi(page: Page, user: RegisterPayload) {
   await expect(page).toHaveURL("/");
 }
 
-async function registerAndLogin(page: Page, user: RegisterPayload) {
+async function registerAndLogin(
+  page: Page,
+  user: RegisterPayload,
+): Promise<void> {
   await registerViaApi(user);
   await loginViaUi(page, user);
 }
 
-async function fillQuizTitleStep(page: Page, title: string) {
+async function fillQuizTitleStep(page: Page, title: string): Promise<void> {
   await page.getByLabel("Quiz title").fill(title);
   await page.getByRole("button", { name: "Continue" }).click();
 }
 
-async function fillCurrentQuestion(page: Page, questionNumber: number, question: QuizQuestionInput) {
+async function fillCurrentQuestion(
+  page: Page,
+  questionNumber: number,
+  question: QuizQuestionInput,
+): Promise<void> {
   await page.getByLabel(`Question ${questionNumber}`).fill(question.text);
 
   for (let i = 2; i < question.choices.length; i++) {
@@ -58,7 +71,10 @@ async function fillCurrentQuestion(page: Page, questionNumber: number, question:
   }
 }
 
-async function fillQuestionsStep(page: Page, questions: QuizQuestionInput[]) {
+async function fillQuestionsStep(
+  page: Page,
+  questions: QuizQuestionInput[],
+): Promise<void> {
   for (let i = 0; i < questions.length; i++) {
     if (i > 0) {
       await page.getByRole("button", { name: "Add question" }).click();
@@ -85,7 +101,7 @@ async function createQuiz(page: Page, quiz: QuizInput): Promise<number> {
   return body.data.id as number;
 }
 
-function myQuizRow(page: Page, title: string) {
+function myQuizRow(page: Page, title: string): Locator {
   return page.getByRole("listitem").filter({ hasText: title });
 }
 

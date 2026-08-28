@@ -4,7 +4,7 @@ import { Button } from "@repo/ui/button";
 import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactElement } from "react";
 import { clientCompleteQuizAttempt, clientSubmitQuizAnswer } from "../client-api";
 import { elapsedMsSince, nowMs } from "../time";
 import type { Quiz, QuizAttempt } from "../types";
@@ -17,7 +17,7 @@ export function QuizSubmit({
 }: {
   quiz: Quiz;
   attempt: QuizAttempt;
-}) {
+}): ReactElement | null {
   const router = useRouter();
   const attemptId = attempt.id;
   const questions = quiz.questions ?? [];
@@ -64,7 +64,7 @@ export function QuizSubmit({
     startTimeRef.current = nowMs();
   }, [currentIndex]);
 
-  async function runComplete() {
+  async function runComplete(): Promise<void> {
     setCompleteError(null);
     setPhase("loading-result");
     try {
@@ -79,7 +79,7 @@ export function QuizSubmit({
     }
   }
 
-  async function handleChoiceSelect(choiceId: number) {
+  async function handleChoiceSelect(choiceId: number): Promise<void> {
     if (submittingChoiceId !== null || !currentQuestion) {
       return;
     }
@@ -112,7 +112,7 @@ export function QuizSubmit({
     }
   }
 
-  function handleBack() {
+  function handleBack(): void {
     if (currentIndex === 0) {
       router.push("/");
       return;
@@ -121,7 +121,7 @@ export function QuizSubmit({
     setCurrentIndex((index) => index - 1);
   }
 
-  function handleNext() {
+  function handleNext(): void {
     if (!isCurrentAnswered || isLastQuestion) {
       return;
     }

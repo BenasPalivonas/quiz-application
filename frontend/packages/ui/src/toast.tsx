@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, type ReactElement } from "react";
 
 export interface ToastProps {
   message: string;
@@ -8,8 +8,12 @@ export interface ToastProps {
   duration?: number;
 }
 
-export function Toast({ message, onDismiss, duration = 10000 }: ToastProps) {
-  useEffect(() => {
+export function Toast({
+  message,
+  onDismiss,
+  duration = 10000,
+}: ToastProps): ReactElement {
+  useEffect((): (() => void) => {
     const timer = setTimeout(onDismiss, duration);
     return () => clearTimeout(timer);
   }, [message, duration, onDismiss]);

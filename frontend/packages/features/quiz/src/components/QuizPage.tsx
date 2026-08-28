@@ -1,11 +1,15 @@
 import { Button } from "@repo/ui/button";
 import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
-import { Suspense } from "react";
+import { Suspense, type ReactElement } from "react";
 import { listQuizzesRequest } from "../api";
 import { QuizList } from "./QuizList";
 
-async function QuizListSection({ page }: { page: number }) {
+async function QuizListSection({
+  page,
+}: {
+  page: number;
+}): Promise<ReactElement> {
   const { data: quizzes, meta: paginationData } =
     await listQuizzesRequest(page);
 
@@ -18,7 +22,7 @@ export function QuizPage({
 }: {
   userName: string;
   page?: string;
-}) {
+}): ReactElement {
   const page = Math.max(1, Number(pageParam) || 1);
 
   return (

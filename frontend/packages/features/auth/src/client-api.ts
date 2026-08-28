@@ -21,14 +21,18 @@ async function postJson<T>(path: string, body: unknown): Promise<T> {
   return data as T;
 }
 
-export function clientLogin(payload: LoginPayload) {
+export function clientLogin(
+  payload: LoginPayload,
+): Promise<{ user: User }> {
   return postJson<{ user: User }>("/api/auth/login", payload);
 }
 
-export function clientRegister(payload: RegisterPayload) {
+export function clientRegister(
+  payload: RegisterPayload,
+): Promise<{ user: User }> {
   return postJson<{ user: User }>("/api/auth/register", payload);
 }
 
-export function clientLogout() {
+export function clientLogout(): Promise<{ ok: true }> {
   return postJson<{ ok: true }>("/api/auth/logout", {});
 }

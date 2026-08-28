@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactElement } from "react";
 import { ErrorText } from "./error-text.js";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -13,7 +13,7 @@ export function Input({
   className,
   maxLength = 200,
   ...props
-}: InputProps) {
+}: InputProps): ReactElement {
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={id} className="text-sm font-medium">

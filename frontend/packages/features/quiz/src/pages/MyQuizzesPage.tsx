@@ -1,9 +1,14 @@
 import Link from "next/link";
+import type { ReactElement } from "react";
 import { listMyQuizzesRequest } from "../api";
 import { MyQuizzesList } from "../components/MyQuizzesList";
 import { QuizLayout } from "../layouts/QuizLayout";
 
-export async function MyQuizzesPage({ page }: { page?: string }) {
+export async function MyQuizzesPage({
+  page,
+}: {
+  page?: string;
+}): Promise<ReactElement> {
   const pageNumber = Math.max(1, Number(page) || 1);
 
   const { data: quizzes, meta: paginationData } =

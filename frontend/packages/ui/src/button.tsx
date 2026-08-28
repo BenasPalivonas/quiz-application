@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactElement } from "react";
 
 type ButtonVariant = "primary" | "secondary";
 
@@ -15,7 +15,7 @@ export function Button({
   variant = "primary",
   className,
   ...props
-}: ButtonProps) {
+}: ButtonProps): ReactElement {
   return (
     <button
       className={`rounded-md border-black border px-4 py-2 text-sm font-medium transition-opacity hover:cursor-pointer  disabled:opacity-50 ${variantClasses[variant]} ${className ?? ""}`}

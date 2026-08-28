@@ -1,5 +1,6 @@
 import { Button } from "@repo/ui/button";
 import Link from "next/link";
+import type { ReactElement } from "react";
 import type { PaginationMeta, QuizAttempt } from "../types";
 
 export function MyAttemptsList({
@@ -8,7 +9,7 @@ export function MyAttemptsList({
 }: {
   attempts: QuizAttempt[];
   paginationData: PaginationMeta;
-}) {
+}): ReactElement {
   if (attempts.length === 0) {
     return (
       <p className="text-sm text-white">You haven't attempted any quizzes yet.</p>

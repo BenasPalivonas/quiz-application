@@ -1,6 +1,7 @@
+import type { ReactElement } from "react";
 import { RegisterForm } from "../components/RegisterForm";
 
-export function RegisterPage() {
+export function RegisterPage(): ReactElement {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="flex w-full max-w-sm flex-col gap-6">

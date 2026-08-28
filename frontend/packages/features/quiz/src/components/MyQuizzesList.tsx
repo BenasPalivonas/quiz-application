@@ -4,7 +4,7 @@ import { Button } from "@repo/ui/button";
 import { Toast } from "@repo/ui/toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import { clientDeleteQuiz } from "../client-api";
 import type { PaginationMeta, Quiz } from "../types";
 
@@ -14,7 +14,7 @@ export function MyQuizzesList({
 }: {
   quizzes: Quiz[];
   paginationData: PaginationMeta;
-}) {
+}): ReactElement {
   const router = useRouter();
   const [deletedIds, setDeletedIds] = useState<number[]>([]);
   const [deletingId, setDeletingId] = useState<number | null>(null);
@@ -24,7 +24,7 @@ export function MyQuizzesList({
     (quiz) => !deletedIds.includes(quiz.id),
   );
 
-  async function handleDelete(quiz: Quiz) {
+  async function handleDelete(quiz: Quiz): Promise<void> {
     if (!window.confirm(`Delete "${quiz.title}"? This can't be undone.`)) {
       return;
     }

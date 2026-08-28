@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactElement } from "react";
 import type { PaginationMeta, Quiz } from "../types";
 import { StartQuizButton } from "./StartQuizButton";
 
@@ -8,7 +9,7 @@ export function QuizList({
 }: {
   quizzes: Quiz[];
   paginationData: PaginationMeta;
-}) {
+}): ReactElement {
   if (quizzes.length === 0) {
     return (
       <p className="text-sm text-white">

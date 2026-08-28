@@ -1,11 +1,16 @@
 import { ApiError } from "@repo/auth/http";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import type { ReactElement } from "react";
 import { getQuizRequest } from "../api";
 import { QuizForm } from "../components/QuizForm";
 import { QuizLayout } from "../layouts/QuizLayout";
 
-export async function EditQuizPage({ id }: { id: string }) {
+export async function EditQuizPage({
+  id,
+}: {
+  id: string;
+}): Promise<ReactElement> {
   const quiz = await getQuizRequest(Number(id))
     .then(({ data }) => data)
     .catch((error) => {

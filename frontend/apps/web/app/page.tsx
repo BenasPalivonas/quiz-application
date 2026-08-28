@@ -1,12 +1,13 @@
 import { getServerUser } from "@repo/auth/session";
 import { QuizHomePage } from "@repo/quiz/pages/QuizHomePage";
 import { redirect } from "next/navigation";
+import type { ReactElement } from "react";
 
 export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<{ page?: string }>;
-}) {
+}): Promise<ReactElement> {
   const user = await getServerUser();
   if (!user) {
     redirect("/login");

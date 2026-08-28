@@ -3,6 +3,7 @@
 import { Button } from "@repo/ui/button";
 import { ErrorText } from "@repo/ui/error-text";
 import { Input } from "@repo/ui/input";
+import type { ReactElement } from "react";
 import { MAX_CHOICES, MIN_CHOICES } from "../question-consts";
 import type { QuestionInput } from "../types";
 
@@ -32,7 +33,7 @@ export function QuestionEditorForm({
   onUpdateChoiceText,
   onAddChoice,
   onRemoveChoice,
-}: QuestionEditorFormProps) {
+}: QuestionEditorFormProps): ReactElement {
   return (
     <div className="flex flex-col gap-3 rounded-md border border-white p-4">
       <div className="flex items-start justify-between gap-2">

@@ -2,6 +2,7 @@
 
 import { Button } from "@repo/ui/button";
 import { Input } from "@repo/ui/input";
+import type { ReactElement } from "react";
 
 type QuizTitleStepProps = {
   title: string;
@@ -10,7 +11,12 @@ type QuizTitleStepProps = {
   onContinue: () => void;
 };
 
-export function QuizTitleStep({ title, onTitleChange, errors, onContinue }: QuizTitleStepProps) {
+export function QuizTitleStep({
+  title,
+  onTitleChange,
+  errors,
+  onContinue,
+}: QuizTitleStepProps): ReactElement {
   return (
     <div className="flex w-full flex-col gap-6">
       <Input

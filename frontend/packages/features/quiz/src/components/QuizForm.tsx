@@ -3,7 +3,7 @@
 import { ApiError } from "@repo/auth/http";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactElement } from "react";
 import { clientCreateQuiz, clientUpdateQuiz } from "../client-api";
 import type { ChoiceInput, QuestionInput, Quiz } from "../types";
 import { QuizQuestionsStep } from "./QuizQuestionsStep";
@@ -28,7 +28,7 @@ function questionsFromQuiz(quiz: Quiz): QuestionInput[] {
   }));
 }
 
-export function QuizForm({ quiz }: { quiz?: Quiz }) {
+export function QuizForm({ quiz }: { quiz?: Quiz }): ReactElement {
   const router = useRouter();
 
   const [step, setStep] = useState<"title" | "questions">("title");
@@ -41,7 +41,7 @@ export function QuizForm({ quiz }: { quiz?: Quiz }) {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleContinue() {
+  function handleContinue(): void {
     if (!title.trim()) {
       setFieldErrors({ title: ["Title is required"] });
       return;
@@ -52,7 +52,9 @@ export function QuizForm({ quiz }: { quiz?: Quiz }) {
 
   const submitButtonText = quiz ? "Save changes" : "Create quiz";
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
     setFormError(null);
     setFieldErrors({});

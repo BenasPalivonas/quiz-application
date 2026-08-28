@@ -5,11 +5,11 @@ import { ErrorText } from "@repo/ui/error-text";
 import { Input } from "@repo/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ReactElement } from "react";
 import { clientLogin } from "../client-api";
 import { ApiError } from "../http";
 
-export function LoginForm() {
+export function LoginForm(): ReactElement {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
@@ -18,7 +18,9 @@ export function LoginForm() {
   const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
     setFormError(null);
     setFieldErrors({});

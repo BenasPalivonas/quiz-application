@@ -12,7 +12,7 @@ function uniqueUser(): RegisterPayload {
   };
 }
 
-async function registerViaApi(user: RegisterPayload) {
+async function registerViaApi(user: RegisterPayload): Promise<void> {
   const api = await request.newContext();
   const res = await api.post(`${API_URL}/register`, { data: user });
   if (!res.ok()) {
