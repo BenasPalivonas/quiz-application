@@ -4,7 +4,7 @@ import { ApiError } from "@repo/auth/http";
 import { Button } from "@repo/ui/button";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
-import { type FormEvent, type ReactElement, useState } from "react";
+import { type FormEvent, type ReactElement, useRef, useState } from "react";
 import { clientCreateQuiz, clientUpdateQuiz } from "../client-api";
 import { MAX_QUESTIONS } from "../question-consts";
 import { useQuizStore, useQuizStoreApi } from "../stores/quiz-store";
@@ -37,6 +37,7 @@ export function QuizQuestionsStep({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
 
   const submitButtonText = quiz ? "Save changes" : "Create quiz";
 
@@ -44,6 +45,10 @@ export function QuizQuestionsStep({
     event: FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
+    if (isSubmittingRef.current) {
+      return;
+    }
+    isSubmittingRef.current = true;
     setFieldErrors({});
     setToastMessage(null);
     setIsSubmitting(true);
@@ -57,6 +62,7 @@ export function QuizQuestionsStep({
         router.push("/");
       }
       router.refresh();
+      return;
     } catch (error) {
       if (error instanceof ApiError) {
         const errors = error.errors ?? {};
@@ -71,9 +77,10 @@ export function QuizQuestionsStep({
       } else {
         setToastMessage("Something went wrong. Please try again.");
       }
-    } finally {
-      setIsSubmitting(false);
     }
+
+    isSubmittingRef.current = false;
+    setIsSubmitting(false);
   }
 
   if (!currentQuestion) {
@@ -88,7 +95,11 @@ export function QuizQuestionsStep({
             <span className="text-xl flex font-medium">
               Quiz title: {title}
             </span>
-            <Button type="button" variant="secondary" onClick={setEditTitleStep}>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={setEditTitleStep}
+            >
               Edit title
             </Button>
           </div>
