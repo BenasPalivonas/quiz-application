@@ -48,3 +48,12 @@ jobs:
 
       - name: Run tests
         run: php artisan test
+
+  deploy:
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Laravel Cloud deploy
+        run: curl --fail -X POST "${{ secrets.LARAVEL_CLOUD_DEPLOY_HOOK }}"
