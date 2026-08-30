@@ -81,5 +81,10 @@ pnpm e2e:ui
 GitHub Actions workflows in `.github/workflows/`:
 
 - `frontend-ci.yml` — lints, type-checks, tests, and builds the frontend; on push to `main` it also deploys `frontend/apps/web` to Vercel.
-- `backend-ci.yml` — runs the Laravel test suite.
+- `backend-ci.yml` — runs the Laravel test suite; on push to `main` it also triggers a Laravel Cloud deploy via webhook.
 - `e2e-ci.yml` — spins up Postgres and the Laravel server, then runs the Playwright e2e suite against them.
+
+### Required secrets/env vars
+
+- **Frontend (Vercel)** — `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` as GitHub Actions secrets; `API_URL` (the backend base URL, e.g. `https://.../api`) as a Vercel project environment variable, kept private (no `NEXT_PUBLIC_` prefix) since it's only read server-side.
+- **Backend (Laravel Cloud)** — `LARAVEL_CLOUD_DEPLOY_HOOK` as a GitHub Actions secret; `DB_CONNECTION`/`DB_HOST`/`DB_PORT`/`DB_DATABASE`/`DB_USERNAME`/`DB_PASSWORD` and `GEMINI_API_KEY` configured directly in the Laravel Cloud dashboard (Laravel defaults to SQLite if `DB_CONNECTION` is unset, which won't work on Laravel Cloud's ephemeral filesystem).
