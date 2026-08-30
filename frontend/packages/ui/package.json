@@ -3,16 +3,15 @@
   "version": "0.0.0",
   "type": "module",
   "files": [
-    "dist"
+    "src"
   ],
   "exports": {
-    "./*": "./dist/*.js"
+    ".": "./src/index.ts",
+    "./*": "./src/*.tsx"
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "check-types": "tsc --noEmit",
-    "dev": "tsc --watch",
     "lint": "eslint src --max-warnings 0"
   },
   "peerDependencies": {
@@ -23,8 +22,8 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/react": "19.2.18",
-    "eslint": "10.8.1",
     "next": "16.3.1",
+    "eslint": "10.8.1",
     "typescript": "7.0.2"
   }
 }

@@ -1,5 +1,5 @@
 import type { InputHTMLAttributes, ReactElement } from "react";
-import { ErrorText } from "./error-text.js";
+import { ErrorText } from "./error-text";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
