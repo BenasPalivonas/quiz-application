@@ -82,9 +82,9 @@ pnpm e2e:ui
 
 GitHub Actions workflows in `.github/workflows/`:
 
-- `frontend-ci.yml` — lints, type-checks, tests, and builds the frontend; on push to `main`, it deploys `frontend/apps/web` to Vercel.
+- frontend-ci.yml — lints, type-checks, tests, and builds the frontend; then spins up Postgres and the Laravel server to run the Playwright e2e suite; on push to main, once both pass, it deploys frontend/apps/web to Vercel.
 - `e2e-ci.yml` — spins up Postgres and the Laravel server, then runs the Playwright e2e suite.
-- `backend-ci.yml` — runs the Laravel test suite; on push to `main` it also triggers a Laravel Cloud deploy via webhook.
+- backend-ci.yml — runs the Laravel test suite; on push to main it also triggers a Laravel Cloud deploy via webhook.
 
 ### Required secrets/env vars
 
