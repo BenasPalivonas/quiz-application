@@ -4,6 +4,7 @@
     "laravel.vscode-laravel",
     "open-southeners.laravel-pint",
     "dbaeumer.vscode-eslint",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "streetsidesoftware.code-spell-checker"
   ]
 }

@@ -2,7 +2,7 @@ import { ApiError } from "@repo/auth/http";
 import { notFound } from "next/navigation";
 import type { ReactElement } from "react";
 import { getAttemptRequest, getQuizRequest } from "../api";
-import { QuizSubmit } from "../components/QuizSubmit";
+import { QuizAttempt } from "../components/QuizAttempt";
 import { QuizLayout } from "../layouts/QuizLayout";
 
 export async function QuizAttemptPage({
@@ -32,7 +32,7 @@ export async function QuizAttemptPage({
     <QuizLayout>
       <div className="flex flex-1 flex-col items-center px-4 py-10">
         <div className="flex w-full max-w-2xl flex-col gap-6">
-          <QuizSubmit quiz={quiz} attempt={attempt} />
+          <QuizAttempt quiz={quiz} attempt={attempt} />
         </div>
       </div>
     </QuizLayout>
