@@ -1,6 +1,6 @@
 # quiz-application
 
-Simple quiz application built on next.js and laravel
+Quiz application built on next.js and laravel
 
 App is now live at [https://quiz-app-eight-sigma-34.vercel.app](https://quiz-app-eight-sigma-34.vercel.app)
 
