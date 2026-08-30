@@ -1,55 +1,93 @@
-# Turborepo Tailwind CSS starter
+# Frontend
 
-This Turborepo starter is maintained by the Turborepo core team.
+pnpm workspace with Turborepo. Requires Node 24+ and pnpm.
 
-## Using this example
+## Environment
 
-Run the following command:
+Copy the example env file and point it at the backend API:
 
 ```sh
-npx create-turbo@latest -e with-tailwind
+cp .env.example .env.local
 ```
 
-## What's inside?
+`.env.local` is loaded by `apps/web` and `apps/e2e` via `dotenv-cli`. The only variable is:
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `web`: another [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
-- `ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/) shared by both `web` and `docs` applications
-- `@repo/tailwind-config`: shared Tailwind CSS theme and PostCSS configuration
-- `@repo/eslint-config`: `eslint` flat configurations (includes `@next/eslint-plugin-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Building packages/ui
-
-This example is set up to produce compiled styles for `ui` components into the `dist` directory. The component `.tsx` files are consumed by the Next.js apps directly using `transpilePackages` in `next.config.ts`. This was chosen for several reasons:
-
-- Make sharing one theme from `packages/tailwind-config/shared-styles.css` to apps and packages as easy as possible.
-- Make package compilation simple by only depending on the Next.js Compiler and `tailwindcss`.
-- Ensure Tailwind classes do not overwrite each other. The `ui` package uses a `ui-` prefix for its classes via `@import "tailwindcss" prefix(ui);` in [packages/ui/src/styles.css](packages/ui/src/styles.css).
-- Maintain clear package export boundaries.
-
-Another option is to consume `packages/ui` directly from source without building. Tailwind CSS v4 automatically detects class names in your source files, but it does not scan other packages in `node_modules`. If you use this option, add [`@source` directives](https://tailwindcss.com/docs/functions-and-directives#source-directive) to the CSS entry point in your apps so Tailwind can find the class names used in the `ui` package:
-
-```css
-@import "tailwindcss";
-@import "@repo/tailwind-config";
-
-@source "../../../packages/ui/src";
+```
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8000/api
 ```
 
-If you choose this strategy, you can remove the `tailwindcss` dependency and the `build:styles` script from the `ui` package.
+Change this if the Laravel API is not running on `127.0.0.1:8000`.
 
-### Utilities
+## Start
 
-This Turborepo has some additional tools already setup for you:
+From this directory:
 
-- [Tailwind CSS](https://tailwindcss.com/) for styles
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+```sh
+pnpm install
+```
+
+The backend must also be running for the app and e2e tests to talk to the API. See the repo root README for that setup.
+
+## Run
+
+```sh
+pnpm dev
+```
+
+The Next.js app is at [http://localhost:3000](http://localhost:3000).
+
+## Tests
+
+Unit and component tests (Vitest) live in the packages that define a `test` script (`@repo/api`, `@repo/quiz`):
+
+```sh
+pnpm test
+```
+
+Only packages changed since the default base branch:
+
+```sh
+pnpm test:affected
+```
+
+## E2E tests
+
+Playwright tests in `apps/e2e`. They start the Next.js app themselves; the backend API still needs to be up.
+
+First time, install browsers:
+
+```sh
+pnpm --filter e2e exec playwright install
+```
+
+Then:
+
+```sh
+pnpm e2e
+```
+
+Interactive UI runner:
+
+```sh
+pnpm e2e:ui
+```
+
+## Storybook
+
+UI components in `@repo/ui`:
+
+```sh
+pnpm storybook
+```
+
+Storybook is at [http://localhost:6006](http://localhost:6006).
+
+## Affected commands
+
+Turbo `--affected` runs a task only for packages that changed relative to the base branch. Root scripts:
+
+| Full | Affected |
+| --- | --- |
+| `pnpm build` | `pnpm build:affected` |
+| `pnpm lint` | `pnpm lint:affected` |
+| `pnpm test` | `pnpm test:affected` |
