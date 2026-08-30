@@ -16,6 +16,7 @@
     "storybook": "turbo run storybook"
   },
   "devDependencies": {
+    "dotenv-cli": "^11.0.0",
     "prettier": "3.9.6",
     "prettier-plugin-tailwindcss": "0.8.1",
     "turbo": "^2.10.11"

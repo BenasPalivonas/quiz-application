@@ -3,6 +3,7 @@
 
 @source "../../../packages/features/auth/src";
 @source "../../../packages/features/quiz/src";
+@source "../../../packages/ui/src";
 
 :root {
   --foreground-rgb: 255, 255, 255;

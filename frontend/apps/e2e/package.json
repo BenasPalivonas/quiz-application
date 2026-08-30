@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "e2e": "playwright test",
-    "e2e:ui": "playwright test --ui",
+    "e2e": "dotenv -e ../../.env.local -- playwright test",
+    "e2e:ui": "dotenv -e ../../.env.local -- playwright test --ui",
     "check-types": "tsc --noEmit"
   },
   "keywords": [],
@@ -15,6 +15,7 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@repo/auth": "workspace:*",
+    "@repo/quiz": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "26.2.0",
     "typescript": "7.0.2"
