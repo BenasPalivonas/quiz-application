@@ -5,7 +5,7 @@ import { ErrorText } from "@repo/ui/error-text";
 import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
 import type { ReactElement } from "react";
-import type { QuizAttempt } from "../models/types";
+import type { QuizAttempt } from "../../../models/types";
 
 export function QuizResult({
   isLoading,

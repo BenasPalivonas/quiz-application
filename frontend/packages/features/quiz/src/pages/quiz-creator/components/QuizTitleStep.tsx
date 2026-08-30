@@ -3,7 +3,7 @@
 import { Button } from "@repo/ui/button";
 import { Input } from "@repo/ui/input";
 import { useState, type ReactElement } from "react";
-import { useQuizStore } from "../stores/quiz-store";
+import { useQuizStore } from "../../../stores/quiz-store";
 
 type QuizTitleStepProps = {
   setEditQuestionsStep: () => void;

@@ -1,9 +1,9 @@
 import { ApiError } from "@repo/auth/http";
 import { notFound } from "next/navigation";
 import type { ReactElement } from "react";
-import { getAttemptRequest, getQuizRequest } from "../api/api";
-import { QuizAttempt } from "../components/QuizAttempt";
-import { QuizLayout } from "../layouts/QuizLayout";
+import { getAttemptRequest, getQuizRequest } from "../../api/api";
+import { QuizLayout } from "../../layouts/QuizLayout";
+import { QuizAttempt } from "./components/QuizAttempt";
 
 export async function QuizAttemptPage({
   id,

@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useState, type ReactElement } from "react";
-import { clientCompleteQuizAttempt } from "../api/client-api";
-import type { Quiz, QuizAttempt } from "../models/types";
+import { clientCompleteQuizAttempt } from "../../../api/client-api";
+import type { Quiz, QuizAttempt } from "../../../models/types";
 import { QuizResult } from "./QuizResult";
 import { QuizSubmit } from "./QuizSubmit";
 

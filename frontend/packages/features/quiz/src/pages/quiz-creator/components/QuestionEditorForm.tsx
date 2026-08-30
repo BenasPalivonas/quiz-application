@@ -3,9 +3,9 @@
 import { Button } from "@repo/ui/button";
 import { Input } from "@repo/ui/input";
 import type { ReactElement } from "react";
-import { MAX_CHOICES, MIN_CHOICES } from "../models/question-consts";
-import type { QuestionInput } from "../models/types";
-import { useQuizStore } from "../stores/quiz-store";
+import { MAX_CHOICES, MIN_CHOICES } from "../../../models/question-consts";
+import type { QuestionInput } from "../../../models/types";
+import { useQuizStore } from "../../../stores/quiz-store";
 
 type QuestionEditorFormProps = {
   question: QuestionInput;

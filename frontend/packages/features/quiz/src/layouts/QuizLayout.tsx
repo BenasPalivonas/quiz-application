@@ -1,5 +1,5 @@
 import type { ReactElement, ReactNode } from "react";
-import { QuizNavbar } from "../components/QuizNavbar";
+import { QuizNavbar } from "./QuizNavbar";
 
 export function QuizLayout({
   children,

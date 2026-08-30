@@ -1,5 +1,5 @@
 import { getServerUser } from "@repo/auth/session";
-import { QuizHomePage } from "@repo/quiz/pages/QuizHomePage";
+import { QuizHomePage } from "@repo/quiz/pages/quiz-home/QuizHomePage";
 import { redirect } from "next/navigation";
 import type { ReactElement } from "react";
 

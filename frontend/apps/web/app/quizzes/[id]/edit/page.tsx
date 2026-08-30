@@ -1,5 +1,5 @@
 import { getServerUser } from "@repo/auth/session";
-import { EditQuizPage } from "@repo/quiz/pages/EditQuizPage";
+import { QuizCreatorPage } from "@repo/quiz/pages/quiz-creator/QuizCreatorPage";
 import { redirect } from "next/navigation";
 import type { ReactElement } from "react";
 
@@ -17,7 +17,7 @@ export default async function Page({
 
   return (
     <main>
-      <EditQuizPage id={id} />
+      <QuizCreatorPage id={id} />
     </main>
   );
 }

@@ -5,8 +5,8 @@ import { Pagination } from "@repo/ui/pagination";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
 import { useState, type ReactElement } from "react";
-import { clientDeleteQuiz } from "../api/client-api";
-import type { PaginationMeta, Quiz } from "../models/types";
+import { clientDeleteQuiz } from "../../../api/client-api";
+import type { PaginationMeta, Quiz } from "../../../models/types";
 
 export function MyCreationsList({
   quizzes,

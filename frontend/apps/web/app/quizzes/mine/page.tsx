@@ -1,5 +1,5 @@
 import { getServerUser } from "@repo/auth/session";
-import { MyQuizzesPage } from "@repo/quiz/pages/MyQuizzesPage";
+import { MyQuizzesPage } from "@repo/quiz/pages/my-quizzes/MyQuizzesPage";
 import { redirect } from "next/navigation";
 import type { ReactElement } from "react";
 

@@ -5,10 +5,10 @@ import { Button } from "@repo/ui/button";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
 import { type ReactElement, type SubmitEvent, useRef, useState } from "react";
-import { clientCreateQuiz, clientUpdateQuiz } from "../api/client-api";
-import { MAX_QUESTIONS } from "../models/question-consts";
-import type { Quiz } from "../models/types";
-import { useQuizStore, useQuizStoreApi } from "../stores/quiz-store";
+import { clientCreateQuiz, clientUpdateQuiz } from "../../../api/client-api";
+import { MAX_QUESTIONS } from "../../../models/question-consts";
+import type { Quiz } from "../../../models/types";
+import { useQuizStore, useQuizStoreApi } from "../../../stores/quiz-store";
 import { QuestionEditorForm } from "./QuestionEditorForm";
 
 type QuizQuestionsStepProps = {

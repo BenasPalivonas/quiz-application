@@ -2,7 +2,7 @@ import { Button } from "@repo/ui/button";
 import { Pagination } from "@repo/ui/pagination";
 import Link from "next/link";
 import type { ReactElement } from "react";
-import type { PaginationMeta, QuizAttempt } from "../models/types";
+import type { PaginationMeta, QuizAttempt } from "../../../models/types";
 
 export function MyAttemptsList({
   attempts,
