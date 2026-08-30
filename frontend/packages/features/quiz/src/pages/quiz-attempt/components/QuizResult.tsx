@@ -66,7 +66,10 @@ export function QuizResult({
         </div>
       )}
 
-      <Link href="/" className="text-sm text-white hover:text-white">
+      <Link
+        href="/"
+        className="text-xl font-bold underline text-white hover:text-white"
+      >
         Back to quizzes
       </Link>
     </div>
