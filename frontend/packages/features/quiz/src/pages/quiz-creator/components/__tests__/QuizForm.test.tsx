@@ -5,7 +5,10 @@ import type { Quiz } from "../../../../models/types";
 import { QuizForm } from "../QuizForm";
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: vi.fn(), refresh: vi.fn() }),
+  useRouter: (): {
+    push: ReturnType<typeof vi.fn>;
+    refresh: ReturnType<typeof vi.fn>;
+  } => ({ push: vi.fn(), refresh: vi.fn() }),
 }));
 
 describe("QuizForm", () => {

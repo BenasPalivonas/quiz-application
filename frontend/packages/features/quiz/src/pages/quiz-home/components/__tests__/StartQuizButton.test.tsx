@@ -6,7 +6,7 @@ import { StartQuizButton } from "../StartQuizButton";
 const mockPush = vi.fn();
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mockPush }),
+  useRouter: (): { push: typeof mockPush } => ({ push: mockPush }),
 }));
 
 const { clientStartQuizAttempt } = vi.hoisted(() => ({

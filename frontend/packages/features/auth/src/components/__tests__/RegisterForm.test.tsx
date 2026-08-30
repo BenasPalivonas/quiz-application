@@ -1,20 +1,24 @@
 import { ApiError } from "@repo/api/http";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { RegisterForm } from "../RegisterForm";
 
 const mockPush = vi.fn();
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mockPush }),
+  useRouter: (): { push: typeof mockPush } => ({ push: mockPush }),
 }));
 
 vi.mock("next/link", () => ({
-  default: ({ href, children }: { href: string; children: ReactNode }) => (
-    <a href={href}>{children}</a>
-  ),
+  default: ({
+    href,
+    children,
+  }: {
+    href: string;
+    children: ReactNode;
+  }): ReactElement => <a href={href}>{children}</a>,
 }));
 
 const { clientRegister } = vi.hoisted(() => ({

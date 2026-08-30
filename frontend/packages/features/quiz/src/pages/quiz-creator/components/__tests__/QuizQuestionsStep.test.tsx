@@ -13,7 +13,10 @@ const mockPush = vi.fn();
 const mockRefresh = vi.fn();
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mockPush, refresh: mockRefresh }),
+  useRouter: (): { push: typeof mockPush; refresh: typeof mockRefresh } => ({
+    push: mockPush,
+    refresh: mockRefresh,
+  }),
 }));
 
 const { clientCreateQuiz, clientUpdateQuiz } = vi.hoisted(() => ({
@@ -37,7 +40,10 @@ function makeQuiz(): Quiz {
   };
 }
 
-function renderWithStore(quiz?: Quiz) {
+function renderWithStore(quiz?: Quiz): {
+  store: ReturnType<typeof createQuizStore>;
+  setEditTitleStep: ReturnType<typeof vi.fn>;
+} {
   const store = createQuizStore("My quiz", [
     { text: "Question one", choices: [{ text: "A" }, { text: "B" }] },
     { text: "Question two", choices: [{ text: "C" }, { text: "D" }] },

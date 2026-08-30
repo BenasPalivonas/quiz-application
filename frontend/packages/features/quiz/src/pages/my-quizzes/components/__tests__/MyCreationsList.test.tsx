@@ -8,8 +8,11 @@ const mockPush = vi.fn();
 const mockRefresh = vi.fn();
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mockPush, refresh: mockRefresh }),
-  usePathname: () => "/quizzes/mine",
+  useRouter: (): { push: typeof mockPush; refresh: typeof mockRefresh } => ({
+    push: mockPush,
+    refresh: mockRefresh,
+  }),
+  usePathname: (): string => "/quizzes/mine",
 }));
 
 const { clientDeleteQuiz } = vi.hoisted(() => ({

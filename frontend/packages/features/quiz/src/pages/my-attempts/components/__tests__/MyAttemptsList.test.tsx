@@ -4,7 +4,7 @@ import type { PaginationMeta, QuizAttempt } from "../../../../models/types";
 import { MyAttemptsList } from "../MyAttemptsList";
 
 vi.mock("next/navigation", () => ({
-  usePathname: () => "/quizzes/mine/attempts",
+  usePathname: (): string => "/quizzes/mine/attempts",
 }));
 
 vi.mock("next/link", () => ({
@@ -15,7 +15,7 @@ vi.mock("next/link", () => ({
   }: {
     href: string;
     children: React.ReactNode;
-  }) => (
+  }): React.ReactElement => (
     <a href={String(href)} {...props}>
       {children}
     </a>

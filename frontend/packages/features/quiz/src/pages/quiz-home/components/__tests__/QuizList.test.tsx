@@ -4,8 +4,8 @@ import type { PaginationMeta, Quiz } from "../../../../models/types";
 import { QuizList } from "../QuizList";
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: vi.fn() }),
-  usePathname: () => "/",
+  useRouter: (): { push: ReturnType<typeof vi.fn> } => ({ push: vi.fn() }),
+  usePathname: (): string => "/",
 }));
 
 function makeQuiz(overrides: Partial<Quiz> = {}): Quiz {

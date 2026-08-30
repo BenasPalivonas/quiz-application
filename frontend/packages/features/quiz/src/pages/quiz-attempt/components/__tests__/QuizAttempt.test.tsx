@@ -1,18 +1,22 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { Quiz, QuizAttempt as QuizAttemptType } from "../../../../models/types";
 import { QuizAttempt } from "../QuizAttempt";
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: vi.fn() }),
+  useRouter: (): { push: ReturnType<typeof vi.fn> } => ({ push: vi.fn() }),
 }));
 
 vi.mock("next/link", () => ({
-  default: ({ href, children }: { href: string; children: ReactNode }) => (
-    <a href={href}>{children}</a>
-  ),
+  default: ({
+    href,
+    children,
+  }: {
+    href: string;
+    children: ReactNode;
+  }): ReactElement => <a href={href}>{children}</a>,
 }));
 
 const { clientSubmitQuizAnswer, clientCompleteQuizAttempt } = vi.hoisted(() => ({

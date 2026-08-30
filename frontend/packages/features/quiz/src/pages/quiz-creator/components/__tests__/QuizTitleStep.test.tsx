@@ -8,7 +8,10 @@ import {
 } from "../../../../stores/quiz-store";
 import { QuizTitleStep } from "../QuizTitleStep";
 
-function renderWithStore(initialTitle = "") {
+function renderWithStore(initialTitle = ""): {
+  store: ReturnType<typeof createQuizStore>;
+  setEditQuestionsStep: ReturnType<typeof vi.fn>;
+} {
   const store = createQuizStore(initialTitle, [emptyQuestion()]);
   const setEditQuestionsStep = vi.fn();
   render(

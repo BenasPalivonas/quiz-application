@@ -7,7 +7,7 @@ import { QuizSubmit } from "../QuizSubmit";
 const mockPush = vi.fn();
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mockPush }),
+  useRouter: (): { push: typeof mockPush } => ({ push: mockPush }),
 }));
 
 const { clientSubmitQuizAnswer } = vi.hoisted(() => ({

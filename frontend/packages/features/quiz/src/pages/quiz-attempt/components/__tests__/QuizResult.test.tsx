@@ -1,14 +1,18 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import type { QuizAttempt } from "../../../../models/types";
 import { QuizResult } from "../QuizResult";
 
 vi.mock("next/link", () => ({
-  default: ({ href, children }: { href: string; children: ReactNode }) => (
-    <a href={href}>{children}</a>
-  ),
+  default: ({
+    href,
+    children,
+  }: {
+    href: string;
+    children: ReactNode;
+  }): ReactElement => <a href={href}>{children}</a>,
 }));
 
 function makeResult(overrides: Partial<QuizAttempt> = {}): QuizAttempt {

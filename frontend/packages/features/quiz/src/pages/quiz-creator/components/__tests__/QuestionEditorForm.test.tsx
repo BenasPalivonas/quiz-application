@@ -27,7 +27,10 @@ function Harness({
   );
 }
 
-function renderWithStore(store: StoreApi<unknown> & Store, questionIndex = 0) {
+function renderWithStore(
+  store: StoreApi<unknown> & Store,
+  questionIndex = 0,
+): ReturnType<typeof render> {
   return render(
     <QuizStoreContext.Provider value={store}>
       <Harness questionIndex={questionIndex} />

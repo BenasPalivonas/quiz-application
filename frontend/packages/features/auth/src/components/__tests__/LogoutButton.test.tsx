@@ -7,7 +7,10 @@ const mockPush = vi.fn();
 const mockRefresh = vi.fn();
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mockPush, refresh: mockRefresh }),
+  useRouter: (): { push: typeof mockPush; refresh: typeof mockRefresh } => ({
+    push: mockPush,
+    refresh: mockRefresh,
+  }),
 }));
 
 const { clientLogout } = vi.hoisted(() => ({
