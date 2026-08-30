@@ -15,12 +15,12 @@ class QuizPolicyTest extends TestCase
     {
         parent::setUp();
 
-        $this->policy = new QuizPolicy();
+        $this->policy = new QuizPolicy;
     }
 
     private function userWithId(int $id): User
     {
-        $user = new User();
+        $user = new User;
         $user->id = $id;
 
         return $user;
@@ -28,7 +28,7 @@ class QuizPolicyTest extends TestCase
 
     private function quizOwnedBy(int $userId): Quiz
     {
-        $quiz = new Quiz();
+        $quiz = new Quiz;
         $quiz->user_id = $userId;
 
         return $quiz;

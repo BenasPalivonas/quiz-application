@@ -16,25 +16,25 @@ class AiFeedbackServiceTest extends TestCase
 {
     private function makeAttempt(int $quizId = 1, int $questionId = 1, int $choiceId = 1): QuizAttempt
     {
-        $quiz = new Quiz();
+        $quiz = new Quiz;
         $quiz->id = $quizId;
         $quiz->title = 'Vibe Check';
 
-        $question = new Question();
+        $question = new Question;
         $question->id = $questionId;
         $question->text = 'Pick a vibe.';
 
-        $choice = new Choice();
+        $choice = new Choice;
         $choice->id = $choiceId;
         $choice->text = 'Chaotic';
 
-        $answer = new AttemptAnswer();
+        $answer = new AttemptAnswer;
         $answer->question_id = $questionId;
         $answer->choice_id = $choiceId;
         $answer->setRelation('question', $question);
         $answer->setRelation('choice', $choice);
 
-        $attempt = new QuizAttempt();
+        $attempt = new QuizAttempt;
         $attempt->quiz_id = $quizId;
         $attempt->setRelation('quiz', $quiz);
         $attempt->setRelation('answers', new Collection([$answer]));
@@ -47,7 +47,7 @@ class AiFeedbackServiceTest extends TestCase
         config(['services.gemini.key' => null]);
         Http::fake();
 
-        $result = (new AiFeedbackService())->generate($this->makeAttempt());
+        $result = (new AiFeedbackService)->generate($this->makeAttempt());
 
         $this->assertNull($result);
         Http::assertNothingSent();
@@ -64,7 +64,7 @@ class AiFeedbackServiceTest extends TestCase
             ], 200),
         ]);
 
-        $result = (new AiFeedbackService())->generate($this->makeAttempt());
+        $result = (new AiFeedbackService)->generate($this->makeAttempt());
 
         $this->assertSame('You are: The Chaotic Goblin.', $result);
     }
@@ -78,7 +78,7 @@ class AiFeedbackServiceTest extends TestCase
             ], 503),
         ]);
 
-        $result = (new AiFeedbackService())->generate($this->makeAttempt());
+        $result = (new AiFeedbackService)->generate($this->makeAttempt());
 
         $this->assertNull($result);
     }
@@ -94,7 +94,7 @@ class AiFeedbackServiceTest extends TestCase
             ], 200),
         ]);
 
-        $service = new AiFeedbackService();
+        $service = new AiFeedbackService;
         $first = $service->generate($this->makeAttempt());
         $second = $service->generate($this->makeAttempt());
 
@@ -114,7 +114,7 @@ class AiFeedbackServiceTest extends TestCase
                 ],
             ], 200);
 
-        $service = new AiFeedbackService();
+        $service = new AiFeedbackService;
         $first = $service->generate($this->makeAttempt());
         $second = $service->generate($this->makeAttempt());
 
@@ -130,7 +130,7 @@ class AiFeedbackServiceTest extends TestCase
             ->push(['steps' => [['type' => 'model_output', 'content' => [['type' => 'text', 'text' => 'You are: The Curious Fox.']]]]], 200)
             ->push(['steps' => [['type' => 'model_output', 'content' => [['type' => 'text', 'text' => 'You are: The Chaotic Goblin.']]]]], 200);
 
-        $service = new AiFeedbackService();
+        $service = new AiFeedbackService;
         $chill = $service->generate($this->makeAttempt(choiceId: 1));
         $chaotic = $service->generate($this->makeAttempt(choiceId: 2));
 
