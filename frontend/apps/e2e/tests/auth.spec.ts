@@ -2,7 +2,7 @@ import type { RegisterPayload } from "@repo/auth/types";
 import { expect, request, test } from "@playwright/test";
 import { randomUUID } from 'crypto';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000/api";
+const API_URL = process.env.API_URL ?? "http://127.0.0.1:8000/api";
 
 function uniqueUser(): RegisterPayload {
   return {

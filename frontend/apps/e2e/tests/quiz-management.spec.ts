@@ -8,7 +8,7 @@ import {
 } from "@playwright/test";
 import { randomUUID } from "crypto";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000/api";
+const API_URL = process.env.API_URL ?? "http://127.0.0.1:8000/api";
 
 type QuizQuestionInput = { text: string; choices: string[] };
 type QuizInput = { title: string; questions: QuizQuestionInput[] };
