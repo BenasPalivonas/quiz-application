@@ -2,6 +2,8 @@
 
 Simple quiz application built on next.js and laravel
 
+App is now live at [https://quiz-app-eight-sigma-34.vercel.app](https://quiz-app-eight-sigma-34.vercel.app)
+
 ## Prerequisites
 
 - PHP 8.2+ and Composer
@@ -80,9 +82,8 @@ pnpm e2e:ui
 
 GitHub Actions workflows in `.github/workflows/`:
 
-- `frontend-ci.yml` — lints, type-checks, tests, and builds the frontend; on push to `main` it also deploys `frontend/apps/web` to Vercel.
+- `frontend-ci.yml` — lints, type-checks, tests, and builds the frontend; then spins up Postgres and the Laravel server to run the Playwright e2e suite; on push to `main`, once both pass, it deploys `frontend/apps/web` to Vercel.
 - `backend-ci.yml` — runs the Laravel test suite; on push to `main` it also triggers a Laravel Cloud deploy via webhook.
-- `e2e-ci.yml` — spins up Postgres and the Laravel server, then runs the Playwright e2e suite against them.
 
 ### Required secrets/env vars
 
