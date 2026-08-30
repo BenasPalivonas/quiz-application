@@ -5,8 +5,7 @@
     "moduleResolution": "Bundler",
     "rootDir": "src",
     "strictNullChecks": true,
-    "noEmit": true,
-    "types": ["node"]
+    "noEmit": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
