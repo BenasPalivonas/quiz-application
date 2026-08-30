@@ -12,7 +12,7 @@ on:
       - ".github/workflows/frontend-ci.yml"
 
 jobs:
-  build:
+  lint-test-build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -42,9 +42,35 @@ jobs:
       - name: Check types
         run: pnpm check-types
 
+      - name: Unit tests
+        run: pnpm test
+
       - name: Build
         run: pnpm build
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
-        working-directory: frontend/apps/e2e
+  deploy:
+    needs: lint-test-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/apps/web
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+
+      - name: Build for deployment
+        run: vercel build --prod --token=$VERCEL_TOKEN
+
+      - name: Deploy to Vercel
+        run: vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
