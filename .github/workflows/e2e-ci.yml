@@ -4,7 +4,6 @@ on:
   pull_request:
     paths:
       - "frontend/**"
-      - "backend/**"
       - ".github/workflows/e2e-ci.yml"
   push:
     branches: [main]
