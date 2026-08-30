@@ -1,4 +1,4 @@
-import { handleSubmitAnswer } from "@repo/quiz/routes";
+import { handleSubmitAnswer } from "@repo/quiz/api/routes";
 import type { NextResponse } from "next/server";
 
 export async function POST(

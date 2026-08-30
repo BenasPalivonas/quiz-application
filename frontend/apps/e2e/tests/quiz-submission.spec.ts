@@ -1,6 +1,6 @@
 import { expect, request, test, type Page } from "@playwright/test";
 import type { RegisterPayload } from "@repo/auth/types";
-import type { Choice, Question, Quiz, QuizAttempt } from "@repo/quiz/types";
+import type { Choice, Question, Quiz, QuizAttempt } from "@repo/quiz/models/types";
 import { randomUUID } from "crypto";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000/api";

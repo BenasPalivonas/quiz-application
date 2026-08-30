@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, type ReactElement } from "react";
+import type { QuestionInput, Quiz } from "../models/types";
 import {
   QuizStoreContext,
   createQuizStore,
   emptyQuestion,
 } from "../stores/quiz-store";
-import type { QuestionInput, Quiz } from "../types";
 import { QuizQuestionsStep } from "./QuizQuestionsStep";
 import { QuizTitleStep } from "./QuizTitleStep";
 

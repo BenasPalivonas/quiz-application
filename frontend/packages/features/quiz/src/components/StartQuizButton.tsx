@@ -4,13 +4,9 @@ import { Button } from "@repo/ui/button";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";
 import { useState, type ReactElement } from "react";
-import { clientStartQuizAttempt } from "../client-api";
+import { clientStartQuizAttempt } from "../api/client-api";
 
-export function StartQuizButton({
-  quizId,
-}: {
-  quizId: number;
-}): ReactElement {
+export function StartQuizButton({ quizId }: { quizId: number }): ReactElement {
   const router = useRouter();
   const [isStarting, setIsStarting] = useState(false);
   const [error, setError] = useState<string | null>(null);

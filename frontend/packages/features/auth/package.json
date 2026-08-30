@@ -7,6 +7,7 @@
     "./types": "./src/types.ts",
     "./constants": "./src/constants.ts",
     "./http": "./src/http.ts",
+    "./api-route": "./src/api-route.ts",
     "./session": "./src/session.ts",
     "./api": "./src/api.ts",
     "./client-api": "./src/client-api.ts",

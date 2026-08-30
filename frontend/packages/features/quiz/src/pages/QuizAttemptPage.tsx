@@ -1,7 +1,7 @@
 import { ApiError } from "@repo/auth/http";
 import { notFound } from "next/navigation";
 import type { ReactElement } from "react";
-import { getAttemptRequest, getQuizRequest } from "../api";
+import { getAttemptRequest, getQuizRequest } from "../api/api";
 import { QuizAttempt } from "../components/QuizAttempt";
 import { QuizLayout } from "../layouts/QuizLayout";
 
@@ -13,7 +13,10 @@ export async function QuizAttemptPage({
   attemptId: string;
 }): Promise<ReactElement> {
   const notFoundOn404Or403 = (error: unknown): never => {
-    if (error instanceof ApiError && (error.status === 404 || error.status === 403)) {
+    if (
+      error instanceof ApiError &&
+      (error.status === 404 || error.status === 403)
+    ) {
       notFound();
     }
     throw error;

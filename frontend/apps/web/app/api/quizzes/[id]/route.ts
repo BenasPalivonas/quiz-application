@@ -1,4 +1,4 @@
-import { handleDeleteQuiz, handleUpdateQuiz } from "@repo/quiz/routes";
+import { handleDeleteQuiz, handleUpdateQuiz } from "@repo/quiz/api/routes";
 import type { NextResponse } from "next/server";
 
 export async function PUT(

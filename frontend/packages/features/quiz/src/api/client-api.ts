@@ -4,7 +4,7 @@ import type {
   Quiz,
   QuizAttempt,
   SubmitAnswerPayload,
-} from "./types";
+} from "../models/types";
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
 

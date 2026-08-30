@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./types": "./src/types.ts",
-    "./routes": "./src/routes.ts",
+    "./models/types": "./src/models/types.ts",
+    "./api/routes": "./src/api/routes.ts",
     "./pages/*": "./src/pages/*.tsx"
   },
   "scripts": {

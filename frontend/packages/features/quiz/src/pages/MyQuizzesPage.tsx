@@ -1,7 +1,7 @@
 import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
 import { Suspense, type ReactElement } from "react";
-import { listMyQuizzesRequest } from "../api";
+import { listMyQuizzesRequest } from "../api/api";
 import { MyCreationsList } from "../components/MyCreationsList";
 import { QuizLayout } from "../layouts/QuizLayout";
 

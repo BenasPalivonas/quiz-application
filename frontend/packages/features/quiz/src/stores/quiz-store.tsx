@@ -2,8 +2,12 @@
 
 import { createContext, useContext } from "react";
 import { createStore, useStore, type StoreApi } from "zustand";
-import { MAX_CHOICES, MAX_QUESTIONS, MIN_CHOICES } from "../question-consts";
-import type { ChoiceInput, QuestionInput } from "../types";
+import {
+  MAX_CHOICES,
+  MAX_QUESTIONS,
+  MIN_CHOICES,
+} from "../models/question-consts";
+import type { ChoiceInput, QuestionInput } from "../models/types";
 
 export function emptyChoice(): ChoiceInput {
   return { text: "" };
@@ -103,7 +107,6 @@ export function createQuizStore(
             : question,
         ),
       })),
-
   }));
 }
 

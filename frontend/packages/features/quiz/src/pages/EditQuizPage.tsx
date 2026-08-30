@@ -2,7 +2,7 @@ import { ApiError } from "@repo/auth/http";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import type { ReactElement } from "react";
-import { getQuizRequest } from "../api";
+import { getQuizRequest } from "../api/api";
 import { QuizForm } from "../components/QuizForm";
 import { QuizLayout } from "../layouts/QuizLayout";
 

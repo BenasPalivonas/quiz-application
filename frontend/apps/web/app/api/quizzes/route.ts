@@ -1,1 +1,1 @@
-export { handleCreateQuiz as POST } from "@repo/quiz/routes";
+export { handleCreateQuiz as POST } from "@repo/quiz/api/routes";

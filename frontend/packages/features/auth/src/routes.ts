@@ -5,21 +5,25 @@ import { AUTH_COOKIE, AUTH_COOKIE_MAX_AGE } from "./constants";
 import { ApiError } from "./http";
 import type { AuthResponse } from "./types";
 
-async function authResponse(
-  action: () => Promise<AuthResponse>,
+function authResponse({ user, token }: AuthResponse): NextResponse {
+  const response = NextResponse.json({ user });
+  response.cookies.set(AUTH_COOKIE, token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: AUTH_COOKIE_MAX_AGE,
+  });
+  return response;
+}
+
+
+export async function withApiErrorHandling<T>(
+  action: () => Promise<T>,
+  onSuccess: (data: T) => NextResponse,
 ): Promise<NextResponse> {
   try {
-    const { user, token } = await action();
-
-    const response = NextResponse.json({ user });
-    response.cookies.set(AUTH_COOKIE, token, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: AUTH_COOKIE_MAX_AGE,
-    });
-    return response;
+    return onSuccess(await action());
   } catch (error) {
     if (error instanceof ApiError) {
       return NextResponse.json(
@@ -34,16 +38,17 @@ async function authResponse(
   }
 }
 
+
 export async function handleLogin(request: Request): Promise<NextResponse> {
   const body = await request.json();
-  return authResponse(() => loginRequest(body));
+  return withApiErrorHandling(() => loginRequest(body), authResponse);
 }
 
 export async function handleRegister(
   request: Request,
 ): Promise<NextResponse> {
   const body = await request.json();
-  return authResponse(() => registerRequest(body));
+  return withApiErrorHandling(() => registerRequest(body), authResponse);
 }
 
 export async function handleLogout(): Promise<NextResponse> {

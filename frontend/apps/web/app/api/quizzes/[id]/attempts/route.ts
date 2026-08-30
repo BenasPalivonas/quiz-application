@@ -1,4 +1,4 @@
-import { handleStartAttempt } from "@repo/quiz/routes";
+import { handleStartAttempt } from "@repo/quiz/api/routes";
 import type { NextResponse } from "next/server";
 
 export async function POST(

@@ -6,7 +6,7 @@ import type {
   Quiz,
   QuizAttempt,
   SubmitAnswerPayload,
-} from "./types";
+} from "../models/types";
 
 export function createQuizRequest(
   payload: CreateQuizPayload,

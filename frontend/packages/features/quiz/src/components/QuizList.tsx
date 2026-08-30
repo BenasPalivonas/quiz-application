@@ -1,6 +1,6 @@
 import { Pagination } from "@repo/ui/pagination";
 import type { ReactElement } from "react";
-import type { PaginationMeta, Quiz } from "../types";
+import type { PaginationMeta, Quiz } from "../models/types";
 import { StartQuizButton } from "./StartQuizButton";
 
 export function QuizList({

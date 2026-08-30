@@ -2,7 +2,7 @@ import { Button } from "@repo/ui/button";
 import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
 import { Suspense, type ReactElement } from "react";
-import { listQuizzesRequest } from "../api";
+import { listQuizzesRequest } from "../api/api";
 import { QuizList } from "../components/QuizList";
 import { QuizLayout } from "../layouts/QuizLayout";
 

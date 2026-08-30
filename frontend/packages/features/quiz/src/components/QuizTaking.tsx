@@ -1,14 +1,13 @@
 "use client";
 
 import { Button } from "@repo/ui/button";
-import { ErrorText } from "@repo/ui/error-text";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactElement } from "react";
 import { clientSubmitQuizAnswer } from "../api/client-api";
 import type { Quiz, QuizAttempt } from "../models/types";
 import { elapsedMsSince, nowMs } from "../utils/time";
 
-export function QuizSubmit({
+export function QuizTaking({
   quiz,
   attempt,
   onComplete,
@@ -135,7 +134,7 @@ export function QuizSubmit({
           );
         })}
       </div>
-      {answerError && <ErrorText>{answerError}</ErrorText>}
+      {answerError && <p className="text-sm text-red-400">{answerError}</p>}
       <div className="flex items-center justify-between">
         <Button
           type="button"

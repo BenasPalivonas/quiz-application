@@ -5,7 +5,7 @@ import { ErrorText } from "@repo/ui/error-text";
 import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
 import type { ReactElement } from "react";
-import type { QuizAttempt } from "../types";
+import type { QuizAttempt } from "../models/types";
 
 export function QuizResult({
   isLoading,
@@ -51,9 +51,7 @@ export function QuizResult({
 
       {result && result.answers.length > 0 && (
         <div className="flex flex-col gap-2">
-          <h3 className="text-sm font-semibold text-white/60">
-            Your answers
-          </h3>
+          <h3 className="text-sm font-semibold text-white/60">Your answers</h3>
           <ul className="flex flex-col gap-2">
             {result.answers.map((answer) => (
               <li
