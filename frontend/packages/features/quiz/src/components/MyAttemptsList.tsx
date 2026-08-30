@@ -30,7 +30,7 @@ export function MyAttemptsList({
           return (
             <li
               key={attempt.id}
-              className="flex items-center justify-between rounded-md border border-white/20 px-4 py-3"
+              className="flex items-center justify-between rounded-md border border-border/20 px-4 py-3"
             >
               <div className="flex flex-col">
                 <span className="font-medium">{attempt.quiz_title}</span>

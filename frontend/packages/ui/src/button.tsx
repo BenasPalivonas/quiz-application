@@ -7,8 +7,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "bg-blue-600 text-white",
-  secondary: "bg-gray-500 text-gray-100",
+  primary: "bg-primary text-white",
+  secondary: "bg-secondary text-secondary-foreground",
 };
 
 export function Button({

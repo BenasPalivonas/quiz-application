@@ -6,7 +6,7 @@ export function Skeleton({
 }: HTMLAttributes<HTMLDivElement>): ReactElement {
   return (
     <div
-      className={`animate-[pulse_1s_ease-in-out_infinite] rounded-md bg-white/20 ${className ?? ""}`}
+      className={`animate-[pulse_1s_ease-in-out_infinite] rounded-md bg-border/20 ${className ?? ""}`}
       {...props}
     />
   );

@@ -19,13 +19,13 @@ export function Toast({
   }, [message, duration, onDismiss]);
 
   return (
-    <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-md border border-red-600/40 bg-black px-4 py-3 text-sm text-red-100 shadow-lg">
+    <div className="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 rounded-md border border-danger/40 bg-black px-4 py-3 text-sm text-danger-lighter shadow-lg">
       <div className="flex items-center gap-3">
         <span>{message}</span>
         <button
           type="button"
           onClick={onDismiss}
-          className="text-red-300 hover:text-red-100"
+          className="text-danger-light hover:text-danger-lighter"
           aria-label="Dismiss"
         >
           ×
