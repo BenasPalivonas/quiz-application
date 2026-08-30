@@ -2,6 +2,7 @@ import { getServerUser } from "@repo/auth/session";
 import { MyQuizzesPage } from "@repo/quiz/pages/my-quizzes/MyQuizzesPage";
 import { redirect } from "next/navigation";
 import type { ReactElement } from "react";
+import { Navbar } from "../../components/Navbar";
 
 export default async function Page({
   searchParams,
@@ -17,6 +18,7 @@ export default async function Page({
 
   return (
     <main>
+      <Navbar />
       <MyQuizzesPage page={page} />
     </main>
   );

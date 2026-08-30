@@ -1,6 +1,6 @@
 "use client";
 
-import { ApiError } from "@repo/auth/http";
+import { ApiError } from "@repo/api/http";
 import { Button } from "@repo/ui/button";
 import { Toast } from "@repo/ui/toast";
 import { useRouter } from "next/navigation";

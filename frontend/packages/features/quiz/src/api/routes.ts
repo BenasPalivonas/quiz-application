@@ -1,3 +1,4 @@
+import { withApiErrorHandling } from "@repo/api/route-handler";
 import { NextResponse } from "next/server";
 import type { CreateQuizPayload, SubmitAnswerPayload } from "../models/types";
 import {
@@ -8,38 +9,6 @@ import {
   submitAnswerRequest,
   updateQuizRequest,
 } from "./api";
-
-export class ApiError extends Error {
-  status: number;
-  errors?: Record<string, string[]>;
-
-  constructor(status: number, message: string, errors?: Record<string, string[]>) {
-    super(message);
-    this.name = "ApiError";
-    this.status = status;
-    this.errors = errors;
-  }
-}
-
-export async function withApiErrorHandling<T>(
-  action: () => Promise<T>,
-  onSuccess: (data: T) => NextResponse,
-): Promise<NextResponse> {
-  try {
-    return onSuccess(await action());
-  } catch (error) {
-    if (error instanceof ApiError) {
-      return NextResponse.json(
-        { message: error.message, errors: error.errors },
-        { status: error.status },
-      );
-    }
-    return NextResponse.json(
-      { message: "Something went wrong. Please try again." },
-      { status: 500 },
-    );
-  }
-}
 
 export async function handleCreateQuiz(
   request: Request,

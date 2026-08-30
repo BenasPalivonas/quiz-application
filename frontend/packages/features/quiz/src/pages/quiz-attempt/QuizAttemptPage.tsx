@@ -1,4 +1,4 @@
-import { ApiError } from "@repo/auth/http";
+import { ApiError } from "@repo/api/http";
 import { notFound } from "next/navigation";
 import type { ReactElement } from "react";
 import { getAttemptRequest, getQuizRequest } from "../../api/api";

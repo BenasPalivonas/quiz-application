@@ -2,6 +2,7 @@ import { getServerUser } from "@repo/auth/session";
 import { QuizAttemptPage } from "@repo/quiz/pages/quiz-attempt/QuizAttemptPage";
 import { redirect } from "next/navigation";
 import type { ReactElement } from "react";
+import { Navbar } from "../../../../components/Navbar";
 
 export default async function Page({
   params,
@@ -17,6 +18,7 @@ export default async function Page({
 
   return (
     <main>
+      <Navbar />
       <QuizAttemptPage id={id} attemptId={attemptId} />
     </main>
   );

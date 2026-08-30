@@ -1,4 +1,4 @@
-import { apiFetch } from "./http";
+import { apiFetch } from "@repo/api/http";
 import type { AuthResponse, LoginPayload, RegisterPayload } from "./types";
 
 export function registerRequest(

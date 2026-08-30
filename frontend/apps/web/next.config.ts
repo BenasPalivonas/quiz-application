@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  transpilePackages: ["@repo/auth", "@repo/quiz"],
+  transpilePackages: ["@repo/api", "@repo/auth", "@repo/quiz"],
 };
 
 export default nextConfig;

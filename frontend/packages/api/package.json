@@ -1,24 +1,16 @@
 {
-  "name": "@repo/auth",
+  "name": "@repo/api",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "exports": {
-    "./types": "./src/types.ts",
-    "./session": "./src/session.ts",
-    "./api": "./src/api.ts",
-    "./client-api": "./src/client-api.ts",
-    "./routes": "./src/routes.ts",
-    "./components/*": "./src/components/*.tsx",
-    "./pages/*": "./src/pages/*.tsx"
+    "./http": "./src/http.ts",
+    "./server-fetch": "./src/server-fetch.ts",
+    "./route-handler": "./src/route-handler.ts"
   },
   "scripts": {
     "lint": "eslint src --max-warnings 0",
     "check-types": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@repo/api": "workspace:*",
-    "@repo/ui": "workspace:*"
   },
   "peerDependencies": {
     "next": "16.3.1",

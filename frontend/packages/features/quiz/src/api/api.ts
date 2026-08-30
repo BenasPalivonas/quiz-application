@@ -1,4 +1,4 @@
-import { serverApiFetch } from "@repo/auth/session";
+import { serverApiFetch } from "@repo/api/server-fetch";
 import type {
   CreateQuizPayload,
   PaginatedAttempts,

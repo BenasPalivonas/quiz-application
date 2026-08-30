@@ -13,7 +13,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/auth": "workspace:*",
+    "@repo/api": "workspace:*",
     "@repo/ui": "workspace:*",
     "zustand": "^5.0.15"
   },

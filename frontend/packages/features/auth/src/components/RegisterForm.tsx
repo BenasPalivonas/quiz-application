@@ -6,8 +6,8 @@ import { Input } from "@repo/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type SubmitEvent, type ReactElement } from "react";
+import { ApiError } from "@repo/api/http";
 import { clientRegister } from "../client-api";
-import { ApiError } from "../http";
 
 export function RegisterForm(): ReactElement {
   const router = useRouter();
