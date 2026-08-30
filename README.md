@@ -75,3 +75,11 @@ Or with the interactive UI runner:
 ```bash
 pnpm e2e:ui
 ```
+
+## CI/CD
+
+GitHub Actions workflows in `.github/workflows/`:
+
+- `frontend-ci.yml` — lints, type-checks, tests, and builds the frontend; on push to `main` it also deploys `frontend/apps/web` to Vercel.
+- `backend-ci.yml` — runs the Laravel test suite.
+- `e2e-ci.yml` — spins up Postgres and the Laravel server, then runs the Playwright e2e suite against them.
